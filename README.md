@@ -2,9 +2,9 @@ The repository contains several study projects.
 
 The following packages contain general types and can be used by any project:
 
-com.stolser.javatraining.model
-com.stolser.javatraining.view
-com.stolser.javatraining.controller
+com.stolser.javatraining.generalMVC.model
+com.stolser.javatraining.generalMVC.view
+com.stolser.javatraining.generalMVC.controller
 
 com.stolser.javatraining.block02.morelessgame - contains project 'More-Less Game'. It's  a command line game where a computer picks randomly
 a number and user tries to guess it by making attempts. After each attempt the information about the subrange is displayed. After

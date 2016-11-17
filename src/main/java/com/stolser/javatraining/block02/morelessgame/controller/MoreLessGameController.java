@@ -4,10 +4,10 @@ import com.google.common.collect.Range;
 import com.stolser.javatraining.block02.morelessgame.model.game.Game;
 import com.stolser.javatraining.block02.morelessgame.model.game.MoreLessGame;
 import com.stolser.javatraining.block02.morelessgame.model.game.UserAttempt;
-import com.stolser.javatraining.controller.InputReader;
+import com.stolser.javatraining.generalMVC.controller.InputReader;
 import com.stolser.javatraining.block02.morelessgame.model.Environment;
 import com.stolser.javatraining.block02.morelessgame.view.ViewGenerator;
-import com.stolser.javatraining.view.ViewPrinter;
+import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

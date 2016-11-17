@@ -1,4 +1,4 @@
-package com.stolser.javatraining.model;
+package com.stolser.javatraining.generalMVC.model;
 
 import java.util.Locale;
 

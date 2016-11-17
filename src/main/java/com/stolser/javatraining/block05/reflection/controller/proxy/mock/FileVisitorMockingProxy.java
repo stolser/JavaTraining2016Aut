@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.stolser.javatraining.block05.reflection.controller.proxy.mock.FileVisitorMockingProxy.FileVisitorMethod.*;
-import static com.stolser.javatraining.controller.utils.ReflectionUtils.getShortNameAsString;
+import static com.stolser.javatraining.generalMVC.controller.utils.ReflectionUtils.getShortNameAsString;
 
 /**
  * Mocks {@link FileVisitor} and allows to check how many times

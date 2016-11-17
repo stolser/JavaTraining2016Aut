@@ -3,9 +3,9 @@ package com.stolser.javatraining.block04.recordbook.model;
 import com.stolser.javatraining.block04.recordbook.view.ConsoleViewFactory;
 import com.stolser.javatraining.block04.recordbook.view.ViewFactory;
 import com.stolser.javatraining.block04.recordbook.view.ViewGenerator;
-import com.stolser.javatraining.controller.ConsoleInputReader;
-import com.stolser.javatraining.controller.InputReader;
-import com.stolser.javatraining.view.ViewPrinter;
+import com.stolser.javatraining.generalMVC.controller.ConsoleInputReader;
+import com.stolser.javatraining.generalMVC.controller.InputReader;
+import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 
 /**
  * A convenient class encapsulating classes for working with input and output

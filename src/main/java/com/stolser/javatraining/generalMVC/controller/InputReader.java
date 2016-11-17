@@ -1,4 +1,4 @@
-package com.stolser.javatraining.controller;
+package com.stolser.javatraining.generalMVC.controller;
 
 /**
  * An abstraction for input data source.

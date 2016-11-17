@@ -5,7 +5,7 @@ import com.stolser.javatraining.block05.reflection.model.vehicle.Car;
 import com.stolser.javatraining.block05.reflection.model.vehicle.Motorizeable;
 import com.stolser.javatraining.block05.reflection.model.vehicle.Truck;
 import com.stolser.javatraining.block05.reflection.model.vehicle.Vehicle;
-import com.stolser.javatraining.view.ViewPrinter;
+import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import static com.stolser.javatraining.block05.reflection.model.vehicle.Car.TransmissionType.AUTOMATIC;
-import static com.stolser.javatraining.controller.utils.ReflectionUtils.*;
+import static com.stolser.javatraining.generalMVC.controller.utils.ReflectionUtils.*;
 
 /**
  * The main controller for displaying info about objects using the Reflection API.

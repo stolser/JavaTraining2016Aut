@@ -1,4 +1,4 @@
-package com.stolser.javatraining.view;
+package com.stolser.javatraining.generalMVC.view;
 
 import java.io.*;
 import java.text.NumberFormat;

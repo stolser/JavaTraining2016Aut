@@ -1,6 +1,6 @@
 package com.stolser.javatraining.block02.morelessgame.model;
 
-import com.stolser.javatraining.controller.utils.NumberUtils;
+import com.stolser.javatraining.generalMVC.controller.utils.NumberUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

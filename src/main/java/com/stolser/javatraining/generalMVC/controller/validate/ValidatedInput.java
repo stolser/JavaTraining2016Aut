@@ -1,8 +1,7 @@
-package com.stolser.javatraining.controller.validate;
+package com.stolser.javatraining.generalMVC.controller.validate;
 
-import com.stolser.javatraining.controller.InputReader;
-import com.stolser.javatraining.controller.validate.RegexValidator;
-import com.stolser.javatraining.view.ViewPrinter;
+import com.stolser.javatraining.generalMVC.controller.InputReader;
+import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 
 import java.util.List;
 

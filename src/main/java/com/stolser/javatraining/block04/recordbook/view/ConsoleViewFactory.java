@@ -1,7 +1,7 @@
 package com.stolser.javatraining.block04.recordbook.view;
 
-import com.stolser.javatraining.view.ViewPrinter;
-import com.stolser.javatraining.view.ViewPrinterImpl;
+import com.stolser.javatraining.generalMVC.view.ViewPrinter;
+import com.stolser.javatraining.generalMVC.view.ViewPrinterImpl;
 
 /**
  * An implementation of ViewFactory that returns classes for generating information

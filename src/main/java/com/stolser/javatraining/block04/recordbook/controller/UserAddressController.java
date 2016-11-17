@@ -2,13 +2,13 @@ package com.stolser.javatraining.block04.recordbook.controller;
 
 import com.stolser.javatraining.block04.recordbook.model.recordbook.Record;
 import com.stolser.javatraining.block04.recordbook.model.user.UserAddress;
-import com.stolser.javatraining.controller.validate.ValidatedInput;
+import com.stolser.javatraining.generalMVC.controller.validate.ValidatedInput;
 
 import java.util.List;
 
 import static com.stolser.javatraining.block04.recordbook.model.user.UserAddress.LocalityType;
 import static com.stolser.javatraining.block04.recordbook.model.user.UserAddress.StreetType;
-import static com.stolser.javatraining.controller.utils.EnumUtils.*;
+import static com.stolser.javatraining.generalMVC.controller.utils.EnumUtils.*;
 
 /**
  * A controller for asking a user info about address, processing and saving it into a current record.

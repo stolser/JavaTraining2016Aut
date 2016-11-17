@@ -1,6 +1,6 @@
-package com.stolser.javatraining.view;
+package com.stolser.javatraining.generalMVC.view;
 
-import com.stolser.javatraining.model.SystemLocale;
+import com.stolser.javatraining.generalMVC.model.SystemLocale;
 
 import java.util.Locale;
 

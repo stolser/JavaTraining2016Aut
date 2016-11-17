@@ -1,12 +1,12 @@
-package com.stolser.javatraining.controller.utils;
+package com.stolser.javatraining.generalMVC.controller.utils;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-import static com.stolser.javatraining.controller.utils.ReflectionUtils.*;
-import static com.stolser.javatraining.controller.utils.ReflectionUtils.getShortNameAsString;
+import static com.stolser.javatraining.generalMVC.controller.utils.ReflectionUtils.*;
+import static com.stolser.javatraining.generalMVC.controller.utils.ReflectionUtils.getShortNameAsString;
 import static org.junit.Assert.assertEquals;
 
 public class ReflectionUtilsTest {

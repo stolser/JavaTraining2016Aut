@@ -2,10 +2,10 @@ package com.stolser.javatraining.block02.morelessgame.model;
 
 import com.stolser.javatraining.block02.morelessgame.view.ConsoleViewFactory;
 import com.stolser.javatraining.block02.morelessgame.view.ViewFactory;
-import com.stolser.javatraining.controller.ConsoleInputReader;
-import com.stolser.javatraining.controller.InputReader;
+import com.stolser.javatraining.generalMVC.controller.ConsoleInputReader;
+import com.stolser.javatraining.generalMVC.controller.InputReader;
 import com.stolser.javatraining.block02.morelessgame.view.ViewGenerator;
-import com.stolser.javatraining.view.ViewPrinter;
+import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 
 /**
  * A convenient class encapsulating classes for working with input and output

@@ -1,8 +1,8 @@
 package com.stolser.javatraining.block05.reflection;
 
 import com.stolser.javatraining.block05.reflection.controller.ReflectionController;
-import com.stolser.javatraining.view.ViewPrinter;
-import com.stolser.javatraining.view.ViewPrinterImpl;
+import com.stolser.javatraining.generalMVC.view.ViewPrinter;
+import com.stolser.javatraining.generalMVC.view.ViewPrinterImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

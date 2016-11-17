@@ -1,6 +1,6 @@
-package com.stolser.javatraining.controller;
+package com.stolser.javatraining.generalMVC.controller;
 
-import com.stolser.javatraining.view.ViewPrinter;
+import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 
 import java.util.Scanner;
 
