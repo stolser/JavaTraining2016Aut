@@ -16,13 +16,15 @@ import com.stolser.javatraining.project01.model.appliance.tools.Drill;
 import com.stolser.javatraining.project01.model.appliance.tools.ElectricalTool;
 import com.stolser.javatraining.project01.model.appliance.tools.LithiumBattery;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 import static com.stolser.javatraining.project01.model.appliance.ApplianceType.*;
 
 public class MainController {
-    private List<ElectricalAppliance> appliances = new ArrayList<>();
+    private Set<ElectricalAppliance> appliances = new HashSet<>();
+    private SortingType sortingType;
 
     public void start() {
         House house = new House();
@@ -38,9 +40,63 @@ public class MainController {
         house.switchAllAppliancesOff();
         System.out.printf("Total power consumption: %.1f\n", house.calculateTotalPowerConsumption());
 
+        sortAppliances();
 
+    }
 
+    private void sortAppliances() {
+        askUserAlgorithm();
+    }
 
+    private void askUserAlgorithm() {
+        System.out.println("Please, choose a sorting algorithm: ");
+
+        for (SortingType type : SortingType.values()) {
+            System.out.printf("\t- %s: %d\n", type, type.ordinal());
+        }
+
+        int userInput = readUserInput();
+
+        sortingType = getAlgorithmByOrdinal(userInput);
+        printAllAppliancesSorted();
+    }
+
+    private int readUserInput() {
+        Scanner scanner = new Scanner(System.in);
+        int input;
+
+        while (true) {
+            while (!scanner.hasNextInt()) {
+                System.out.println("Please, enter a number.");
+                scanner.nextLine();
+            }
+
+            input = scanner.nextInt();
+
+            if ((input >= 0) && (input < SortingType.values().length)) {
+                break;
+            }
+
+            System.out.println("Wrong input! Please, repeat your attempt.");
+        }
+
+        scanner.close();
+
+        return input;
+    }
+
+    private SortingType getAlgorithmByOrdinal(int ordinal) {
+        for (SortingType type : SortingType.values()) {
+            if (type.ordinal() == ordinal)
+                return type;
+        }
+
+        throw new IllegalArgumentException();
+    }
+
+    private void printAllAppliancesSorted() {
+        System.out.printf("Appliances sorted '%s':\n", sortingType);
+        ApplianceUtils.getSorted(appliances, sortingType).forEach(System.out::println);
     }
 
     private void initializeAppliances() {
@@ -57,32 +113,39 @@ public class MainController {
 
         ElectricalAppliance hoover = new Hoover(CLEANING, "Philips", 5.2);
         hoover.setEngine(engine1);
+        hoover.setPrice(150);
         appliances.add(hoover);
 
         ElectricalAppliance fridge = new Fridge(KITCHEN, "Electrolux", 65);
         fridge.setEngine(engine2);
+        fridge.setPrice(450);
         appliances.add(fridge);
 
         ElectricalAppliance oven = new Oven(KITCHEN, "Gorenje", 45);
         oven.setEngine(engine3);
+        oven.setPrice(420);
         appliances.add(oven);
 
         ElectricalAppliance coffeeMaker = new CoffeeMaker(KITCHEN, "Gorenje", 3.5);
         coffeeMaker.setEngine(engine4);
+        coffeeMaker.setPrice(80);
         appliances.add(coffeeMaker);
 
         ElectricalAppliance drill = new Drill(TOOL, "Bosch", 1.8);
         drill.setEngine(engine5);
-        ((ElectricalTool)drill).setAccumulator(accumulator);
+        drill.setPrice(190);
+        ((ElectricalTool) drill).setAccumulator(accumulator);
         appliances.add(drill);
 
         ElectricalAppliance audioSystem = new AudioSystem(OFFICE, "F&D", 7);
         audioSystem.setEngine(engine6);
-        ((Audible)audioSystem).setSpeaker(speaker);
+        audioSystem.setPrice(210);
+        ((Audible) audioSystem).setSpeaker(speaker);
         appliances.add(audioSystem);
 
         ElectricalAppliance oven2 = new Oven(KITCHEN, "Samsung", 40);
         oven2.setEngine(engine7);
+        oven2.setPrice(520);
         appliances.add(oven2);
 
     }

@@ -2,14 +2,12 @@ package com.stolser.javatraining.project01.model;
 
 import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class House {
-    private List<ElectricalAppliance> appliances = new ArrayList<>();
+    private Set<ElectricalAppliance> appliances = new HashSet<>();
 
-    public void addAppliances(List<ElectricalAppliance> appliances) {
+    public void addAppliances(Set<ElectricalAppliance> appliances) {
         this.appliances.addAll(appliances);
     }
 
@@ -37,8 +35,6 @@ public class House {
     }
 
     public double calculateTotalPowerConsumption() {
-        double total = 0;
-
         return appliances.stream()
                 .filter(ElectricalAppliance::isOn)
                 .mapToDouble(ElectricalAppliance::getCurrentPower)
