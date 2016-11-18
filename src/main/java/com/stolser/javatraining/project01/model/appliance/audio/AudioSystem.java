@@ -7,6 +7,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AudioSystem extends AbstractElectricalAppliance implements Audible {
     private static final double EFFICIENCY_RATION = 0.8;
+    private static final String AUDIO_SYSTEM_IS_SWITCHED_ON = "AudioSystem (%s) is switched on.\n";
+    private static final String AUDIO_SYSTEM_IS_SWITCHED_OFF = "AudioSystem (%s) is switched off.\n";
+    private static final String AUDIO_SYSTEM_IS_PLAYING_MUSIC = "AudioSystem is playing music at volume level = %d\n";
+    private static final String AUDIO_SYSTEM_MUSIC_IS_STOPPED = "AudioSystem: music is stopped.";
     private Speaker speaker;
 
     public AudioSystem(ApplianceType type, String brand, double weight) {
@@ -15,14 +19,14 @@ public class AudioSystem extends AbstractElectricalAppliance implements Audible 
 
     @Override
     public void switchOn() {
-        System.out.printf("AudioSystem (%s) is switched on.\n", this);
+        System.out.printf(AUDIO_SYSTEM_IS_SWITCHED_ON, this);
         isSwitchedOn = true;
         currentPower = getMaxPower() * EFFICIENCY_RATION;
     }
 
     @Override
     public void switchOff() {
-        System.out.printf("AudioSystem (%s) is switched off.\n", this);
+        System.out.printf(AUDIO_SYSTEM_IS_SWITCHED_OFF, this);
         isSwitchedOn = false;
         currentPower = 0;
     }
@@ -30,13 +34,13 @@ public class AudioSystem extends AbstractElectricalAppliance implements Audible 
     @Override
     public void playMusic() {
         if (isSwitchedOn) {
-            System.out.printf("AudioSystem is playing music at volume level = %d\n", speaker.getVolume());
+            System.out.printf(AUDIO_SYSTEM_IS_PLAYING_MUSIC, speaker.getVolume());
         }
     }
 
     @Override
     public void pauseMusic() {
-        System.out.println("AudioSystem: music is stopped.");
+        System.out.println(AUDIO_SYSTEM_MUSIC_IS_STOPPED);
     }
 
     @Override
