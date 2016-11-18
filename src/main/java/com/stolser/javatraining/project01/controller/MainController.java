@@ -65,7 +65,7 @@ public class MainController {
     }
 
     private void sortAppliances() {
-        sortingType = getAlgorithmByOrdinal(askUserAlgorithm());
+        sortingType = SortingType.values()[askUserAlgorithm()];
         printAllAppliancesSorted();
     }
 
@@ -109,15 +109,6 @@ public class MainController {
         scanner.close();
 
         return input;
-    }
-
-    private SortingType getAlgorithmByOrdinal(int ordinal) {
-        for (SortingType type : SortingType.values()) {
-            if (type.ordinal() == ordinal)
-                return type;
-        }
-
-        throw new IllegalArgumentException();
     }
 
     private void searchAppliances() throws IOException {
