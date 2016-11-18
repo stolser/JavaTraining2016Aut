@@ -16,17 +16,23 @@ import com.stolser.javatraining.project01.model.appliance.tools.Drill;
 import com.stolser.javatraining.project01.model.appliance.tools.ElectricalTool;
 import com.stolser.javatraining.project01.model.appliance.tools.LithiumBattery;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.Set;
 
 import static com.stolser.javatraining.project01.model.appliance.ApplianceType.*;
 
 public class MainController {
+    private static final String FILTER_PARAMS_FILENAME = "src\\main\\resources\\" +
+            "project01\\filterParams.properties";
     private Set<ElectricalAppliance> appliances = new HashSet<>();
     private SortingType sortingType;
 
-    public void start() {
+    public void start() throws IOException {
         House house = new House();
         initializeAppliances();
 
@@ -41,24 +47,25 @@ public class MainController {
         System.out.printf("Total power consumption: %.1f\n", house.calculateTotalPowerConsumption());
 
         sortAppliances();
+        searchAppliances();
 
     }
 
     private void sortAppliances() {
-        askUserAlgorithm();
+        sortingType = getAlgorithmByOrdinal(askUserAlgorithm());
+        printAllAppliancesSorted();
     }
 
-    private void askUserAlgorithm() {
+    private int askUserAlgorithm() {
         System.out.println("Please, choose a sorting algorithm: ");
 
         for (SortingType type : SortingType.values()) {
             System.out.printf("\t- %s: %d\n", type, type.ordinal());
         }
 
-        int userInput = readUserInput();
+        System.out.printf("\t- Exit: -1\n");
 
-        sortingType = getAlgorithmByOrdinal(userInput);
-        printAllAppliancesSorted();
+        return readUserInput();
     }
 
     private int readUserInput() {
@@ -73,7 +80,13 @@ public class MainController {
 
             input = scanner.nextInt();
 
+            if (input == -1) {
+                scanner.close();
+                break;
+            }
+
             if ((input >= 0) && (input < SortingType.values().length)) {
+                scanner.close();
                 break;
             }
 
@@ -92,6 +105,22 @@ public class MainController {
         }
 
         throw new IllegalArgumentException();
+    }
+
+    private void searchAppliances() throws IOException {
+        String filename = FILTER_PARAMS_FILENAME;
+        InputStream input = new FileInputStream(filename);
+        Properties properties = new Properties();
+        properties.load(input);
+
+        int priceMin = Integer.valueOf(properties.getProperty("filterparams.price.min"));
+        int priceMax = Integer.valueOf(properties.getProperty("filterparams.price.max"));
+        int powerMin = Integer.valueOf(properties.getProperty("filterparams.power.min"));
+        int powerMax = Integer.valueOf(properties.getProperty("filterparams.power.max"));
+        int weightMin = Integer.valueOf(properties.getProperty("filterparams.weight.min"));
+        int weightMax = Integer.valueOf(properties.getProperty("filterparams.weight.max"));
+
+
     }
 
     private void printAllAppliancesSorted() {
