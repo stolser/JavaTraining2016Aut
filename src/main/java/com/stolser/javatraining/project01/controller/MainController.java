@@ -2,6 +2,7 @@ package com.stolser.javatraining.project01.controller;
 
 import com.stolser.javatraining.project01.model.House;
 import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
+import com.stolser.javatraining.project01.model.appliance.EmptyElectricalAppliance;
 import com.stolser.javatraining.project01.model.appliance.audio.Audible;
 import com.stolser.javatraining.project01.model.appliance.audio.AudioSystem;
 import com.stolser.javatraining.project01.model.appliance.audio.Speaker;
@@ -19,11 +20,10 @@ import com.stolser.javatraining.project01.model.appliance.tools.LithiumBattery;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
+import static com.stolser.javatraining.project01.controller.ApplianceUtils.getSorted;
+import static com.stolser.javatraining.project01.controller.SortingType.*;
 import static com.stolser.javatraining.project01.model.appliance.ApplianceType.*;
 
 public class MainController {
@@ -113,19 +113,55 @@ public class MainController {
         Properties properties = new Properties();
         properties.load(input);
 
-        int priceMin = Integer.valueOf(properties.getProperty("filterparams.price.min"));
-        int priceMax = Integer.valueOf(properties.getProperty("filterparams.price.max"));
-        int powerMin = Integer.valueOf(properties.getProperty("filterparams.power.min"));
-        int powerMax = Integer.valueOf(properties.getProperty("filterparams.power.max"));
-        int weightMin = Integer.valueOf(properties.getProperty("filterparams.weight.min"));
-        int weightMax = Integer.valueOf(properties.getProperty("filterparams.weight.max"));
+        double priceMin = Double.valueOf(properties.getProperty("filterparams.price.min"));
+        double priceMax = Double.valueOf(properties.getProperty("filterparams.price.max"));
+        double powerMin = Double.valueOf(properties.getProperty("filterparams.power.min"));
+        double powerMax = Double.valueOf(properties.getProperty("filterparams.power.max"));
+        double weightMin = Double.valueOf(properties.getProperty("filterparams.weight.min"));
+        double weightMax = Double.valueOf(properties.getProperty("filterparams.weight.max"));
 
+        EmptyElectricalAppliance lowerLimits = new EmptyElectricalAppliance();
+        EmptyElectricalAppliance upperLimits = new EmptyElectricalAppliance();
+        NavigableSet<ElectricalAppliance> result = null;
 
+        if (priceMin < priceMax) {
+            lowerLimits.setPrice(priceMin);
+            upperLimits.setPrice(priceMax);
+            result = getSorted(appliances, BY_PRICE_ASC)
+                    .subSet(lowerLimits, true, upperLimits, true);
+            System.out.printf("----------- Appliances limited by the price = [%.2f; %.2f]\n",
+                    priceMin, priceMax);
+            result.forEach(System.out::println);
+            System.out.println("-----------------------------------------------------------");
+
+        }
+
+        if (powerMin < powerMax) {
+            lowerLimits.setMaxPower(powerMin);
+            upperLimits.setMaxPower(powerMax);
+            result = getSorted(result, BY_POWER_ASC)
+                    .subSet(lowerLimits, true, upperLimits, true);
+            System.out.printf("----------- Appliances limited by the power = [%.2f; %.2f]\n",
+                    powerMin, powerMax);
+            result.forEach(System.out::println);
+            System.out.println("-----------------------------------------------------------");
+        }
+
+        if (weightMin < weightMax) {
+            lowerLimits.setWeight(weightMin);
+            upperLimits.setWeight(weightMax);
+            result = getSorted(result, BY_WEIGHT_ASC)
+                    .subSet(lowerLimits, true, upperLimits, true);
+            System.out.printf("----------- Appliances limited by the weight = [%.2f; %.2f]\n",
+                    weightMin, weightMax);
+            result.forEach(System.out::println);
+            System.out.println("-----------------------------------------------------------");
+        }
     }
 
     private void printAllAppliancesSorted() {
         System.out.printf("Appliances sorted '%s':\n", sortingType);
-        ApplianceUtils.getSorted(appliances, sortingType).forEach(System.out::println);
+        getSorted(appliances, sortingType).forEach(System.out::println);
     }
 
     private void initializeAppliances() {

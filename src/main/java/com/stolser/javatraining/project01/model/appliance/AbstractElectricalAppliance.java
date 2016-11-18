@@ -23,6 +23,8 @@ public abstract class AbstractElectricalAppliance implements ElectricalAppliance
         this.weight = weight;
     }
 
+    public AbstractElectricalAppliance() {}
+
     @Override
     public ApplianceType getType() {
         return type;

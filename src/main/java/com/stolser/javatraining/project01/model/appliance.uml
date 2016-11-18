@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.stolser.javatraining.project01.model.appliance</OriginalElement>
+  <nodes>
+    <node x="520.0" y="247.0">com.stolser.javatraining.project01.model.appliance.kitchen.Oven</node>
+    <node x="94.0" y="400.0">com.stolser.javatraining.project01.model.appliance.engine.Engine</node>
+    <node x="400.0" y="247.0">com.stolser.javatraining.project01.model.appliance.kitchen.CoffeeMaker</node>
+    <node x="461.0" y="0.0">com.stolser.javatraining.project01.model.appliance.Appliance</node>
+    <node x="600.0" y="247.0">com.stolser.javatraining.project01.model.appliance.kitchen.Fridge</node>
+    <node x="384.0" y="79.0">com.stolser.javatraining.project01.model.appliance.ElectricalAppliance</node>
+    <node x="140.0" y="479.0">com.stolser.javatraining.project01.model.appliance.engine.AbstractEngine</node>
+    <node x="725.0" y="158.0">com.stolser.javatraining.project01.model.appliance.audio.Audible</node>
+    <node x="0.0" y="632.0">com.stolser.javatraining.project01.model.appliance.ApplianceType</node>
+    <node x="123.0" y="247.0">com.stolser.javatraining.project01.model.appliance.household.Hoover</node>
+    <node x="172.0" y="558.0">com.stolser.javatraining.project01.model.appliance.engine.SimpleEngine</node>
+    <node x="0.0" y="479.0">com.stolser.javatraining.project01.model.appliance.engine.EnhancedEngine</node>
+    <node x="25.0" y="326.0">com.stolser.javatraining.project01.model.appliance.tools.Drill</node>
+    <node x="352.0" y="0.0">com.stolser.javatraining.project01.model.appliance.Switchable</node>
+    <node x="35.5" y="558.0">com.stolser.javatraining.project01.model.appliance.engine.SuperEngine</node>
+    <node x="156.0" y="632.0">com.stolser.javatraining.project01.model.appliance.engine.EngineRegime</node>
+    <node x="362.0" y="158.0">com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance</node>
+    <node x="309.0" y="632.0">com.stolser.javatraining.project01.model.appliance.audio.Speaker</node>
+    <node x="685.0" y="247.0">com.stolser.javatraining.project01.model.appliance.audio.AudioSystem</node>
+    <node x="0.0" y="247.0">com.stolser.javatraining.project01.model.appliance.tools.ElectricalTool</node>
+    <node x="321.0" y="479.0">com.stolser.javatraining.project01.model.appliance.tools.LithiumBattery</node>
+    <node x="325.5" y="400.0">com.stolser.javatraining.project01.model.appliance.tools.Accumulator</node>
+    <node x="214.00000000000003" y="247.0">com.stolser.javatraining.project01.model.appliance.EmptyElectricalAppliance</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.stolser.javatraining.project01.model.appliance.kitchen.Oven" target="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance">
+      <point x="0.0" y="-14.5" />
+      <point x="550.0" y="227.0" />
+      <point x="475.1428571428572" y="227.0" />
+      <point x="25.142857142857167" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.audio.AudioSystem" target="com.stolser.javatraining.project01.model.appliance.audio.Speaker">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.kitchen.CoffeeMaker" target="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance" target="com.stolser.javatraining.project01.model.appliance.engine.Engine">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.ElectricalAppliance" target="com.stolser.javatraining.project01.model.appliance.Switchable">
+      <point x="-33.0" y="-14.5" />
+      <point x="417.0" y="54.0" />
+      <point x="396.5" y="54.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.EmptyElectricalAppliance" target="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance">
+      <point x="0.0" y="-14.5" />
+      <point x="297.0" y="227.0" />
+      <point x="424.8571428571429" y="227.0" />
+      <point x="-25.14285714285711" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.engine.EnhancedEngine" target="com.stolser.javatraining.project01.model.appliance.engine.Engine">
+      <point x="0.0" y="-14.5" />
+      <point x="60.0" y="454.0" />
+      <point x="111.0" y="454.0" />
+      <point x="-17.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.engine.SuperEngine" target="com.stolser.javatraining.project01.model.appliance.engine.AbstractEngine">
+      <point x="24.5" y="-14.5" />
+      <point x="109.0" y="533.0" />
+      <point x="168.0" y="533.0" />
+      <point x="-28.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.audio.AudioSystem" target="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance">
+      <point x="-25.5" y="-14.5" />
+      <point x="710.5" y="207.0" />
+      <point x="525.4285714285714" y="207.0" />
+      <point x="75.42857142857144" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.engine.SimpleEngine" target="com.stolser.javatraining.project01.model.appliance.engine.AbstractEngine">
+      <point x="0.0" y="-14.5" />
+      <point x="28.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.kitchen.Fridge" target="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance">
+      <point x="0.0" y="-14.5" />
+      <point x="632.5" y="217.0" />
+      <point x="500.28571428571433" y="217.0" />
+      <point x="50.285714285714334" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.tools.ElectricalTool" target="com.stolser.javatraining.project01.model.appliance.tools.Accumulator">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.ElectricalAppliance" target="com.stolser.javatraining.project01.model.appliance.Appliance">
+      <point x="33.0" y="-14.5" />
+      <point x="483.0" y="54.0" />
+      <point x="503.5" y="54.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.engine.SuperEngine" target="com.stolser.javatraining.project01.model.appliance.engine.EngineRegime">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.tools.LithiumBattery" target="com.stolser.javatraining.project01.model.appliance.tools.Accumulator">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.household.Hoover" target="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance">
+      <point x="0.0" y="-14.5" />
+      <point x="158.5" y="217.0" />
+      <point x="399.7142857142858" y="217.0" />
+      <point x="-50.28571428571428" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.engine.SuperEngine" target="com.stolser.javatraining.project01.model.appliance.engine.EnhancedEngine">
+      <point x="-24.5" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.engine.AbstractEngine" target="com.stolser.javatraining.project01.model.appliance.engine.Engine">
+      <point x="0.0" y="-14.5" />
+      <point x="196.0" y="454.0" />
+      <point x="145.0" y="454.0" />
+      <point x="17.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.audio.AudioSystem" target="com.stolser.javatraining.project01.model.appliance.audio.Audible">
+      <point x="25.5" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance" target="com.stolser.javatraining.project01.model.appliance.ApplianceType">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.tools.ElectricalTool" target="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance">
+      <point x="0.0" y="-14.5" />
+      <point x="51.5" y="207.0" />
+      <point x="374.57142857142856" y="207.0" />
+      <point x="-75.42857142857144" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance" target="com.stolser.javatraining.project01.model.appliance.ElectricalAppliance">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.stolser.javatraining.project01.model.appliance.tools.Drill" target="com.stolser.javatraining.project01.model.appliance.tools.ElectricalTool">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="411.0" y="270.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

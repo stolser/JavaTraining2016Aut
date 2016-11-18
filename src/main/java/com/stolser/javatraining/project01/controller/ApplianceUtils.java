@@ -23,9 +23,7 @@ public class ApplianceUtils {
                                                                     SortingType algorithm) {
         Comparator<ElectricalAppliance> comparator = algorithms.get(algorithm);
         NavigableSet<ElectricalAppliance> sortedElems = new TreeSet<>(comparator);
-        System.out.println("-----------UnsortedSet----------");
-        unsortedElems.forEach(System.out::println);
-        System.out.println("---------------------------------");
+
         sortedElems.addAll(unsortedElems);
 
         return sortedElems;
