@@ -7,6 +7,8 @@ import java.util.*;
 public class House {
     private Set<ElectricalAppliance> appliances = new HashSet<>();
 
+    private House() {}
+
     public void addAppliances(Set<ElectricalAppliance> appliances) {
         this.appliances.addAll(appliances);
     }
@@ -34,10 +36,14 @@ public class House {
         });
     }
 
-    public double calculateTotalPowerConsumption() {
+    public double getPowerConsumption() {
         return appliances.stream()
                 .filter(ElectricalAppliance::isOn)
                 .mapToDouble(ElectricalAppliance::getCurrentPower)
                 .sum();
+    }
+
+    public static House newInstance() {
+        return new House();
     }
 }
