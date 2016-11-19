@@ -2,24 +2,20 @@ package com.stolser.javatraining.project01.controller;
 
 import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
-import com.stolser.javatraining.project01.model.appliance.EmptyElectricalAppliance;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.NavigableSet;
 import java.util.Properties;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.stolser.javatraining.project01.controller.ApplianceUtils.getSorted;
-import static com.stolser.javatraining.project01.controller.SortingOrder.*;
+import static com.stolser.javatraining.project01.controller.ApplianceUtils.*;
 import static java.lang.String.format;
 
 /**
- * Provides functionality for filtering electrical appliances.
- * Exploits {@link java.util.TreeSet#subSet(Object, Object)} to get appliances in the specified range.
+ * Filters and prints electrical appliances.
  */
-public class FilterController {
+public class FilteringController {
     private static final String FILTER_PARAMS_FILENAME = "src\\main\\resources\\" +
             "project01\\filterParams.properties";
     private static final String FILTERPARAMS_PRICE_MIN = "filterparams.price.min";
@@ -28,6 +24,7 @@ public class FilterController {
     private static final String FILTERPARAMS_POWER_MAX = "filterparams.power.max";
     private static final String FILTERPARAMS_WEIGHT_MIN = "filterparams.weight.min";
     private static final String FILTERPARAMS_WEIGHT_MAX = "filterparams.weight.max";
+
     private static final String APPLIANCES_LIMITED_BY_PRICE_TEXT =
             "----------- Appliances limited by the price = [%.2f; %.2f]";
     private static final String SEPARATOR = "-----------------------------------------------------------";
@@ -35,16 +32,6 @@ public class FilterController {
             "Appliances limited by the power = [%.2f; %.2f]";
     private static final String APPLIANCES_LIMITED_BY_WEIGHT_TEXT = "----------- " +
             "Appliances limited by the weight = [%.2f; %.2f]";
-    /**
-     * Represents the lower limits for specified filtering parameters. <br />
-     * Used as an argument for {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}.
-     */
-    private static final EmptyElectricalAppliance LOWER_FILTERING_LIMITS = new EmptyElectricalAppliance();
-    /**
-     * Represents the upper limits for specified filtering parameters. <br />
-     * Used as an argument for {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}.
-     */
-    private static final EmptyElectricalAppliance UPPER_FILTERING_LIMITS = new EmptyElectricalAppliance();
 
     /**
      * An output stream for all messages.
@@ -57,13 +44,13 @@ public class FilterController {
     /**
      * The current results of filtering. Updated after each stage of filtering (by price/by power/by weight).
      */
-    private NavigableSet<ElectricalAppliance> filteringResult;
+    private Set<ElectricalAppliance> filteringResult;
     /**
      * Appliances to be filtered. They are passed into {@link ApplianceUtils#getSorted(Set, SortingOrder)}.
      */
     private Set<ElectricalAppliance> unfilteredAppliances;
 
-    public FilterController(ViewPrinter out) {
+    public FilteringController(ViewPrinter out) {
         this.out = out;
         filteringParams = new Properties();
     }
@@ -78,75 +65,52 @@ public class FilterController {
         checkNotNull("A set of appliances for filtering cannot be null", appliances);
 
         loadFilteringParamsFromFile();
-        unfilteredAppliances = appliances;
 
-        filterByPrice();
-        filterByPower();
-        filterByWeight();
+        filterByWeight(filterByPower(filterByPrice(appliances)));
     }
 
-    private void filterByPrice() {
+    private Set<ElectricalAppliance> filterByPrice(Set<ElectricalAppliance> unfiltered) {
         double priceMin = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_PRICE_MIN));
         double priceMax = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_PRICE_MAX));
 
-        if (priceMin < priceMax) {
-            LOWER_FILTERING_LIMITS.setPrice(priceMin);
-            UPPER_FILTERING_LIMITS.setPrice(priceMax);
-            filteringResult = getSorted(unfilteredAppliances, BY_PRICE_ASC)
-                    .subSet(LOWER_FILTERING_LIMITS, true, UPPER_FILTERING_LIMITS, true);
+        Set<ElectricalAppliance> results = getFilteredByPrice(unfiltered, priceMin, priceMax);
 
-            out.printlnString(format(APPLIANCES_LIMITED_BY_PRICE_TEXT, priceMin, priceMax));
-            printFilteringResults();
+        out.printlnString(format(APPLIANCES_LIMITED_BY_PRICE_TEXT, priceMin, priceMax));
+        printAppliances(results);
 
-        } else {
-            updateUnfilteredAppliances();
-        }
+        return results;
     }
 
-    private void filterByPower() {
+    private Set<ElectricalAppliance> filterByPower(Set<ElectricalAppliance> unfiltered) {
         double powerMin = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_POWER_MIN));
         double powerMax = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_POWER_MAX));
 
-        if (powerMin < powerMax) {
-            LOWER_FILTERING_LIMITS.setMaxPower(powerMin);
-            UPPER_FILTERING_LIMITS.setMaxPower(powerMax);
-            filteringResult = getSorted(unfilteredAppliances, BY_POWER_ASC)
-                    .subSet(LOWER_FILTERING_LIMITS, true, UPPER_FILTERING_LIMITS, true);
+        Set<ElectricalAppliance> results = getFilteredByPower(unfiltered, powerMin, powerMax);
 
-            out.printlnString(format(APPLIANCES_LIMITED_BY_POWER_TEXT, powerMin, powerMax));
-            printFilteringResults();
+        out.printlnString(format(APPLIANCES_LIMITED_BY_POWER_TEXT, powerMin, powerMax));
+        printAppliances(results);
 
-        } else {
-            updateUnfilteredAppliances();
-        }
+        return results;
     }
 
-    private void filterByWeight() {
+    private Set<ElectricalAppliance> filterByWeight(Set<ElectricalAppliance> unfiltered) {
         double weightMin = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_WEIGHT_MIN));
         double weightMax = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_WEIGHT_MAX));
 
-        if (weightMin < weightMax) {
-            LOWER_FILTERING_LIMITS.setWeight(weightMin);
-            UPPER_FILTERING_LIMITS.setWeight(weightMax);
-            filteringResult = getSorted(unfilteredAppliances, BY_WEIGHT_ASC)
-                    .subSet(LOWER_FILTERING_LIMITS, true, UPPER_FILTERING_LIMITS, true);
-            out.printlnString(format(APPLIANCES_LIMITED_BY_WEIGHT_TEXT, weightMin, weightMax));
-            printFilteringResults();
+        Set<ElectricalAppliance> results = getFilteredByWeight(unfiltered, weightMin, weightMax);
 
-        } else {
-            updateUnfilteredAppliances();
-        }
+        out.printlnString(format(APPLIANCES_LIMITED_BY_WEIGHT_TEXT, weightMin, weightMax));
+        printAppliances(results);
+
+        return results;
     }
 
-    private void printFilteringResults() {
-        filteringResult.stream()
+    private void printAppliances(Set<ElectricalAppliance> appliances) {
+        appliances.stream()
                 .map(Object::toString)
                 .forEach(out::printlnString);
-        out.printlnString(SEPARATOR);
-    }
 
-    private void updateUnfilteredAppliances() {
-        unfilteredAppliances = (filteringResult == null) ? unfilteredAppliances : filteringResult;
+        out.printlnString(SEPARATOR);
     }
 
     private void loadFilteringParamsFromFile() throws IOException {

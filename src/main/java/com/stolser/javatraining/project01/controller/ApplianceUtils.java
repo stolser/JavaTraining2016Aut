@@ -1,16 +1,20 @@
 package com.stolser.javatraining.project01.controller;
 
 import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
+import com.stolser.javatraining.project01.model.appliance.EmptyElectricalAppliance;
 
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static com.stolser.javatraining.project01.controller.SortingOrder.BY_POWER_ASC;
+import static com.stolser.javatraining.project01.controller.SortingOrder.BY_PRICE_ASC;
+import static com.stolser.javatraining.project01.controller.SortingOrder.BY_WEIGHT_ASC;
+
 /**
  * Contains static methods for working with appliances.
  */
 public class ApplianceUtils {
-
     /**
      * Sorts a set passed in as an argument according to the provided sorting order.
      * @param unsorted a set to be sorted
@@ -23,5 +27,74 @@ public class ApplianceUtils {
         sorted.addAll(unsorted);
 
         return sorted;
+    }
+
+    /**
+     * Exploits {@link java.util.TreeSet#subSet(Object, Object)} to get appliances in the specified range.
+     * @param original
+     * @param priceMin
+     * @param priceMax
+     * @return
+     */
+    public static Set<ElectricalAppliance> getFilteredByPrice(Set<ElectricalAppliance> original,
+                                                              double priceMin, double priceMax) {
+
+        Set<ElectricalAppliance> result;
+        EmptyElectricalAppliance lowerFilteringLimits;
+        EmptyElectricalAppliance upperFilteringLimits;
+
+        if (priceMin < priceMax) {
+            lowerFilteringLimits = new EmptyElectricalAppliance();
+            upperFilteringLimits = new EmptyElectricalAppliance();
+            lowerFilteringLimits.setPrice(priceMin);
+            upperFilteringLimits.setPrice(priceMax);
+
+            result = getSorted(original, BY_PRICE_ASC)
+                    .subSet(lowerFilteringLimits, true, upperFilteringLimits, true);
+        } else {
+            result = original;
+        }
+
+        return result;
+    }
+
+    public static Set<ElectricalAppliance> getFilteredByPower(Set<ElectricalAppliance> original,
+                                                               double powerMin, double powerMax) {
+
+        Set<ElectricalAppliance> result;
+
+        if (powerMin < powerMax) {
+            EmptyElectricalAppliance lowerFilteringLimits = new EmptyElectricalAppliance();
+            EmptyElectricalAppliance upperFilteringLimits = new EmptyElectricalAppliance();
+            lowerFilteringLimits.setMaxPower(powerMin);
+            upperFilteringLimits.setMaxPower(powerMax);
+
+            result = getSorted(original, BY_POWER_ASC)
+                    .subSet(lowerFilteringLimits, true, upperFilteringLimits, true);
+        } else {
+            result = original;
+        }
+
+        return result;
+    }
+
+    public static Set<ElectricalAppliance> getFilteredByWeight(Set<ElectricalAppliance> original,
+                                                              double weightMin, double weightMax) {
+
+        Set<ElectricalAppliance> result;
+
+        if (weightMin < weightMax) {
+            EmptyElectricalAppliance lowerFilteringLimits = new EmptyElectricalAppliance();
+            EmptyElectricalAppliance upperFilteringLimits = new EmptyElectricalAppliance();
+            lowerFilteringLimits.setWeight(weightMin);
+            upperFilteringLimits.setWeight(weightMax);
+
+            result = getSorted(original, BY_WEIGHT_ASC)
+                    .subSet(lowerFilteringLimits, true, upperFilteringLimits, true);
+        } else {
+            result = original;
+        }
+
+        return result;
     }
 }

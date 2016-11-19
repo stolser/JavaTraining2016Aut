@@ -57,8 +57,8 @@ public class MainController {
 
         sortAppliancesAndPrintResult();
 
-        FilterController filterController = new FilterController(out);
-        filterController.filterAppliancesAndPrintResult(appliances);
+        FilteringController filteringController = new FilteringController(out);
+        filteringController.filterAppliancesAndPrintResult(appliances);
     }
 
     private void sortAppliancesAndPrintResult() {
