@@ -16,10 +16,14 @@ public class EmptyElectricalAppliance extends AbstractElectricalAppliance {
     public EmptyElectricalAppliance() {}
 
     @Override
-    public void switchOn() {}
+    public void switchOn() {
+        isSwitchedOn = true;
+    }
 
     @Override
-    public void switchOff() {}
+    public void switchOff() {
+        isSwitchedOn = false;
+    }
 
     @Override
     public double getMaxPower() {

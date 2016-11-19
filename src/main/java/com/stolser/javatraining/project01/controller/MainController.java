@@ -55,13 +55,13 @@ public class MainController {
         house.switchAllAppliancesOff();
         out.printlnString(format(TOTAL_POWER_CONSUMPTION_TEXT, house.getPowerConsumption()));
 
-        sortAppliances();
+        sortAppliancesAndPrintResult();
 
         FilterController filterController = new FilterController(out);
-        filterController.filterAppliances(appliances);
+        filterController.filterAppliancesAndPrintResult(appliances);
     }
 
-    private void sortAppliances() {
+    private void sortAppliancesAndPrintResult() {
         do {
             int userInput = askUserSortingOrder();
 

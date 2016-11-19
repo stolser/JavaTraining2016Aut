@@ -74,7 +74,7 @@ public class FilterController {
      * @param appliances items to be filtered
      * @throws IOException if an exception errors during reading params from a file
      */
-    public void filterAppliances(Set<ElectricalAppliance> appliances) throws IOException {
+    public void filterAppliancesAndPrintResult(Set<ElectricalAppliance> appliances) throws IOException {
         checkNotNull("A set of appliances for filtering cannot be null", appliances);
 
         loadFilteringParamsFromFile();

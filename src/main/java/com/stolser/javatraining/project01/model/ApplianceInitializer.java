@@ -45,7 +45,7 @@ public class ApplianceInitializer {
         appliances.add(coffeeMaker);
 
         ElectricalTool drill = new Drill(TOOL, "Bosch", 1.8);
-        drill.setMotor(new SimpleMotor(180));
+        drill.setMotor(new SimpleMotor(110));
         drill.setPrice(190);
         drill.setAccumulator(new LithiumBattery(120));
         appliances.add(drill);
