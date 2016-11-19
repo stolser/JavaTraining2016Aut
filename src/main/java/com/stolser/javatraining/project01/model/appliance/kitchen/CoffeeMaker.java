@@ -2,9 +2,14 @@ package com.stolser.javatraining.project01.model.appliance.kitchen;
 
 import com.stolser.javatraining.project01.model.appliance.AbstractElectricalAppliance;
 import com.stolser.javatraining.project01.model.appliance.ApplianceType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CoffeeMaker extends AbstractElectricalAppliance {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CoffeeMaker.class);
     private static final double EFFICIENCY_RATION = 0.8;
+    private static final String COFFEE_MAKER_IS_SWITCHED_ON_TEXT = "CoffeeMaker (%s) is switched on.";
+    private static final String COFFEE_MAKER_IS_SWITCHED_OFF_TEXT = "CoffeeMaker (%s) is switched off.";
 
     public CoffeeMaker(ApplianceType type, String brand, double weight) {
         super(type, brand, weight);
@@ -12,14 +17,14 @@ public class CoffeeMaker extends AbstractElectricalAppliance {
 
     @Override
     public void switchOn() {
-        System.out.printf("CoffeeMaker (%s) is switched on.\n", this);
+        LOGGER.debug(String.format(COFFEE_MAKER_IS_SWITCHED_ON_TEXT, this));
         isSwitchedOn = true;
         currentPower = getMaxPower() * EFFICIENCY_RATION;
     }
 
     @Override
     public void switchOff() {
-        System.out.printf("CoffeeMaker (%s) is switched off.\n", this);
+        LOGGER.debug(String.format(COFFEE_MAKER_IS_SWITCHED_OFF_TEXT, this));
         isSwitchedOn = false;
         currentPower = 0;
     }
