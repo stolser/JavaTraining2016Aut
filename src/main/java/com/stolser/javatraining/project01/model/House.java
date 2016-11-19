@@ -9,6 +9,9 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * A container for appliances.
+ */
 public class House {
     private static final Logger LOGGER = LoggerFactory.getLogger(House.class);
     private static final String ALL_APPLIANCES_ON_TEXT = "All appliances have been switched on.";
@@ -18,21 +21,33 @@ public class House {
 
     private House() {}
 
+    /**
+     * @param appliances a group of appliances to be added to this house
+     */
     public void addAppliances(Set<ElectricalAppliance> appliances) {
         Preconditions.checkNotNull("appliances cannot be null.", appliances);
         this.appliances.addAll(appliances);
     }
 
+    /**
+     * Switches on all the appliances in this house.
+     */
     public void switchAllAppliancesOn() {
         appliances.forEach(ElectricalAppliance::switchOn);
         LOGGER.debug(ALL_APPLIANCES_ON_TEXT);
     }
 
+    /**
+     * Switches off all the appliances in this house.
+     */
     public void switchAllAppliancesOff() {
         appliances.forEach(ElectricalAppliance::switchOff);
         LOGGER.debug(ALL_APPLIANCES_OFF_TEXT);
     }
 
+    /**
+     * Randomly switches on some of the appliances in this house.
+     */
     public void switchRandomlyAppliancesOn() {
         Random random = new Random();
 
@@ -46,6 +61,9 @@ public class House {
         });
     }
 
+    /**
+     * @return the total power being consumed by all the appliances in this house
+     */
     public double getPowerConsumption() {
         return appliances.stream()
                 .filter(ElectricalAppliance::isOn)
@@ -53,7 +71,11 @@ public class House {
                 .sum();
     }
 
-    public static House newInstance() {
+    /**
+     * A static factory method for getting a house without any appliances in it.
+     * @return an instance of this class
+     */
+    public static House newEmptyHouse() {
         return new House();
     }
 }

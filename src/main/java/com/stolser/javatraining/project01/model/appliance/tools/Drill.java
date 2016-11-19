@@ -4,8 +4,15 @@ import com.stolser.javatraining.project01.model.appliance.ApplianceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A tool called 'drill'.
+ */
 public class Drill extends ElectricalTool {
     private static final Logger LOGGER = LoggerFactory.getLogger(Drill.class);
+    /**
+     * Affects the current input power of this electrical appliance.<br />
+     * Is used during calculating the current power as a multiplication parameter along with the max power.
+     */
     private static final double EFFICIENCY_RATION = 0.8;
     private static final String DRILL_WORKS_USING_ACCUMULATOR_TEXT = "Drill works using accumulator.";
     private static final String DRILL_WORKS_USING_ELECTRICITY_GRID_TEXT = "Drill (%s) works using " +

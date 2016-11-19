@@ -6,13 +6,22 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Contains static methods for working with appliances.
+ */
 public class ApplianceUtils {
 
+    /**
+     * Sorts a set passed in as an argument according to the provided sorting order.
+     * @param unsorted a set to be sorted
+     * @param sortingOrder a sorting order
+     * @return a sorted set
+     */
     public static NavigableSet<ElectricalAppliance> getSorted(Set<ElectricalAppliance> unsorted,
-                                                                    SortingType sortingType) {
-        NavigableSet<ElectricalAppliance> sortedElems = new TreeSet<>(sortingType.getAlgorithm());
-        sortedElems.addAll(unsorted);
+                                                                    SortingOrder sortingOrder) {
+        NavigableSet<ElectricalAppliance> sorted = new TreeSet<>(sortingOrder.getOrder());
+        sorted.addAll(unsorted);
 
-        return sortedElems;
+        return sorted;
     }
 }

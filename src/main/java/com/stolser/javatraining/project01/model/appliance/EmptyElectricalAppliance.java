@@ -1,5 +1,9 @@
 package com.stolser.javatraining.project01.model.appliance;
 
+/**
+ * Used by {@link com.stolser.javatraining.project01.controller.FilterController} for filtering appliances
+ * as parameters for the {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)} method.
+ */
 public class EmptyElectricalAppliance extends AbstractElectricalAppliance {
     private double power;
     private double price;

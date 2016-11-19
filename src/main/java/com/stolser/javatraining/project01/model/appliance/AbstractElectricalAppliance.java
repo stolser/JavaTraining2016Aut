@@ -1,12 +1,15 @@
 package com.stolser.javatraining.project01.model.appliance;
 
-import com.stolser.javatraining.project01.model.appliance.engine.Engine;
+import com.stolser.javatraining.project01.model.appliance.engine.Motor;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * Provides implementation for general functionality, such as getters/setters.
+ */
 public abstract class AbstractElectricalAppliance implements ElectricalAppliance {
-    private Engine engine;
+    private Motor motor;
     private ApplianceType type;
     private String brand;
     private double price;
@@ -58,7 +61,7 @@ public abstract class AbstractElectricalAppliance implements ElectricalAppliance
 
     @Override
     public double getMaxPower() {
-        return engine.getInputPower();
+        return motor.getInputPower();
     }
 
     @Override
@@ -66,15 +69,14 @@ public abstract class AbstractElectricalAppliance implements ElectricalAppliance
         return currentPower;
     }
 
-    @Override
-    public void setEngine(Engine engine) {
-        checkNotNull(engine);
-        this.engine = engine;
+    public void setMotor(Motor motor) {
+        checkNotNull(motor);
+        this.motor = motor;
     }
 
     @Override
     public String toString() {
         return String.format("{type = %s, brand = '%s', price = %.2f, weight = %s, power = %.1f}",
-                type, brand, price, weight, engine.getInputPower());
+                type, brand, price, weight, motor.getInputPower());
     }
 }

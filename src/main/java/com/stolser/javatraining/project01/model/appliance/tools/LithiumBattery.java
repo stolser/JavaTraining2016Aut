@@ -2,6 +2,9 @@ package com.stolser.javatraining.project01.model.appliance.tools;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * A battery that can be used as a source of electricity.
+ */
 public class LithiumBattery implements Accumulator {
     private boolean isOn;
     private int currentCharge;

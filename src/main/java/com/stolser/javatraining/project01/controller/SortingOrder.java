@@ -4,7 +4,14 @@ import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
 
 import java.util.Comparator;
 
-public enum SortingType {
+/**
+ * Represents different sorting orders.<br />
+ * Filtering methods use the {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)} method.
+ * Since sets delete duplicates, all sorting comparators in this class implemented in such a way that they
+ * can return only two values: '-1' and '1'. That makes it possible to filter appliances with
+ * equal parameters without deleting duplicates.
+ */
+public enum SortingOrder {
     BY_PRICE_ASC("By price, from the cheapest",
             (first, second) -> (first.getPrice() < second.getPrice()) ? -1 : 1),
     BY_PRICE_DESC("By price, from the most expensive",
@@ -18,16 +25,19 @@ public enum SortingType {
     BY_WEIGHT_DESC("By weight, form the heaviest",
             (first, second) -> (second.getWeight() < first.getWeight()) ? -1 : 1);
 
+    /**
+     * Displayed to a user in the menu.
+     */
     private String description;
-    private Comparator<ElectricalAppliance> algorithm;
+    private Comparator<ElectricalAppliance> order;
 
-    SortingType(String description, Comparator<ElectricalAppliance> algorithm) {
+    SortingOrder(String description, Comparator<ElectricalAppliance> order) {
         this.description = description;
-        this.algorithm = algorithm;
+        this.order = order;
     }
 
-    public Comparator<ElectricalAppliance> getAlgorithm() {
-        return algorithm;
+    public Comparator<ElectricalAppliance> getOrder() {
+        return order;
     }
 
     @Override

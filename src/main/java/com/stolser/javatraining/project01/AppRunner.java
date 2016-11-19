@@ -8,8 +8,8 @@ import com.stolser.javatraining.project01.controller.MainController;
 
 public class AppRunner {
     public static void main(String[] args) throws Exception {
-        ViewPrinter output = new ViewPrinterImpl(System.out);
-        InputReader input = new ConsoleInputReader(output);
+        ViewPrinter output = new ViewPrinterImpl(System.out);   // an output stream for all messages;
+        InputReader input = new ConsoleInputReader(output);     // an input stream for reading a user input;
 
         new MainController(output, input).start();
     }

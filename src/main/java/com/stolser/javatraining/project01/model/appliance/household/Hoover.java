@@ -5,8 +5,15 @@ import com.stolser.javatraining.project01.model.appliance.ApplianceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Represents a vacuum cleaner.
+ */
 public class Hoover extends AbstractElectricalAppliance {
     private static final Logger LOGGER = LoggerFactory.getLogger(Hoover.class);
+    /**
+     * Affects the current input power of this electrical appliance.<br />
+     * Is used during calculating the current power as a multiplication parameter along with the max power.
+     */
     private static final double EFFICIENCY_RATION = 0.8;
     private static final String HOOVER_IS_SWITCHED_ON_TEXT = "Hoover (%s) is switched on.";
     private static final String HOOVER_IS_SWITCHED_OFF_TEXT = "Hoover (%s) is switched off.";
