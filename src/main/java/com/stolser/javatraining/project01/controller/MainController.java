@@ -14,7 +14,8 @@ import static com.stolser.javatraining.project01.controller.ApplianceUtils.getSo
 import static java.lang.String.format;
 
 /**
- * Contains the main logic of the whole app.<br />
+ * Contains the main logic of the whole application. Uses {@link ApplianceUtils} and
+ * {@link FilteringController} to sort and filter appliances.
  */
 public class MainController {
     private static final String CHOOSE_SORTING_ORDER_TEXT = "Please, choose a sorting order: ";
@@ -39,6 +40,7 @@ public class MainController {
      * The main enter point of this app. Performs the following: initializes appliances; switches them;
      * calculates and prints the total power consumption; sorts appliances according to a sorting order
      * picked by a user; filtered out appliances according to the parameters read from a file.
+     *
      * @throws IOException if an exception errors during reading params from a file
      */
     public void start() throws IOException {
@@ -65,7 +67,7 @@ public class MainController {
         do {
             int userInput = askUserSortingOrder();
 
-            if (userInput == -1) {
+            if (userChoseExit(userInput)) {
                 break;
             }
 
@@ -93,8 +95,8 @@ public class MainController {
         while (true) {
             userInput = in.readIntValue();
 
-            // -1 --> 'Exit'; [0; values().length) - the ordinals of SortingOrder elements;
-            if ((userInput >= -1) && (userInput < SortingOrder.values().length)) {
+            if (userChoseSortingOrder(userInput)
+                    || userChoseExit(userInput)) {
                 break;
             }
 
@@ -104,8 +106,17 @@ public class MainController {
         return userInput;
     }
 
+    private boolean userChoseSortingOrder(int userInput) {
+        return (userInput >= 0) && (userInput < SortingOrder.values().length);
+    }
+
+    private boolean userChoseExit(int userInput) {
+        return userInput == -1;
+    }
+
     private void printAllAppliancesSorted() {
         out.printlnString(format(APPLIANCES_SORTED_TEXT, sortingOrder));
+
         getSorted(appliances, sortingOrder)
                 .stream()
                 .map(Object::toString)
