@@ -10,7 +10,7 @@ import org.junit.Test;
 import java.util.NavigableSet;
 import java.util.Set;
 
-public class ApplianceUtilsTest {
+public class ApplianceUtilsSortingMethodsTest {
     private House house;
     private Set<ElectricalAppliance> appliances;
 

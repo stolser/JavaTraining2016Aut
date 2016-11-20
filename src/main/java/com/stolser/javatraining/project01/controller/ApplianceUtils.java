@@ -33,7 +33,8 @@ public class ApplianceUtils {
      * Exploits {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}
      * to get appliances with price in the specified range.
      * @param original unfiltered appliances to be filtered by the price value
-     * @param priceMin the lower price limit for appliances to be included in the result
+     * @param priceMin the lower price limit for appliances to be included in the result. <br />
+     *                 If priceMin >= priceMax the result will be same as the original appliances
      * @param priceMax the upper price limit for appliances to be included in the result
      * @return filtered appliances
      */
@@ -63,7 +64,8 @@ public class ApplianceUtils {
      * Exploits {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}
      * to get appliances with power in the specified range.
      * @param original unfiltered appliances to be filtered by the power value
-     * @param powerMin the lower power limit for appliances to be included in the result
+     * @param powerMin the lower power limit for appliances to be included in the result. <br />
+     *                 If priceMin >= priceMax the result will be same as the original appliances
      * @param powerMax the upper power limit for appliances to be included in the result
      * @return filtered appliances
      */
@@ -91,7 +93,8 @@ public class ApplianceUtils {
      * Exploits {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}
      * to get appliances with weight in the specified range.
      * @param original unfiltered appliances to be filtered by the weight value
-     * @param weightMin the lower weight limit for appliances to be included in the result
+     * @param weightMin the lower weight limit for appliances to be included in the result. <br />
+     *                 If priceMin >= priceMax the result will be same as the original appliances
      * @param weightMax the upper weight limit for appliances to be included in the result
      * @return filtered appliances
      */
