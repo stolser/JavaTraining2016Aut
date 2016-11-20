@@ -41,14 +41,6 @@ public class FilteringController {
      * Filtering parameters.
      */
     private Properties filteringParams;
-    /**
-     * The current results of filtering. Updated after each stage of filtering (by price/by power/by weight).
-     */
-    private Set<ElectricalAppliance> filteringResult;
-    /**
-     * Appliances to be filtered. They are passed into {@link ApplianceUtils#getSorted(Set, SortingOrder)}.
-     */
-    private Set<ElectricalAppliance> unfilteredAppliances;
 
     public FilteringController(ViewPrinter out) {
         this.out = out;

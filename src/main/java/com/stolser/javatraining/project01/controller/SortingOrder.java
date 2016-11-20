@@ -29,6 +29,9 @@ public enum SortingOrder {
      * Displayed to a user in the menu.
      */
     private String description;
+    /**
+     * An order in which appliances will be sorted.
+     */
     private Comparator<ElectricalAppliance> order;
 
     SortingOrder(String description, Comparator<ElectricalAppliance> order) {

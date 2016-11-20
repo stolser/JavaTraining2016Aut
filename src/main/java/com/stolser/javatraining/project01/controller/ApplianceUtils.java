@@ -30,11 +30,12 @@ public class ApplianceUtils {
     }
 
     /**
-     * Exploits {@link java.util.TreeSet#subSet(Object, Object)} to get appliances in the specified range.
-     * @param original
-     * @param priceMin
-     * @param priceMax
-     * @return
+     * Exploits {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}
+     * to get appliances with price in the specified range.
+     * @param original unfiltered appliances to be filtered by the price value
+     * @param priceMin the lower price limit for appliances to be included in the result
+     * @param priceMax the upper price limit for appliances to be included in the result
+     * @return filtered appliances
      */
     public static Set<ElectricalAppliance> getFilteredByPrice(Set<ElectricalAppliance> original,
                                                               double priceMin, double priceMax) {
@@ -58,6 +59,14 @@ public class ApplianceUtils {
         return result;
     }
 
+    /**
+     * Exploits {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}
+     * to get appliances with power in the specified range.
+     * @param original unfiltered appliances to be filtered by the power value
+     * @param powerMin the lower power limit for appliances to be included in the result
+     * @param powerMax the upper power limit for appliances to be included in the result
+     * @return filtered appliances
+     */
     public static Set<ElectricalAppliance> getFilteredByPower(Set<ElectricalAppliance> original,
                                                                double powerMin, double powerMax) {
 
@@ -78,6 +87,14 @@ public class ApplianceUtils {
         return result;
     }
 
+    /**
+     * Exploits {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}
+     * to get appliances with weight in the specified range.
+     * @param original unfiltered appliances to be filtered by the weight value
+     * @param weightMin the lower weight limit for appliances to be included in the result
+     * @param weightMax the upper weight limit for appliances to be included in the result
+     * @return filtered appliances
+     */
     public static Set<ElectricalAppliance> getFilteredByWeight(Set<ElectricalAppliance> original,
                                                               double weightMin, double weightMax) {
 

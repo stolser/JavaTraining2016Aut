@@ -17,6 +17,9 @@ public class House {
     private static final String ALL_APPLIANCES_ON_TEXT = "All appliances have been switched on.";
     private static final String ALL_APPLIANCES_OFF_TEXT = "All appliances have been switched off.";
     private static final String SWITCHING_ON_APPLIANCES_RANDOMLY_TEXT = "Switching on appliances randomly...";
+    /**
+     * All the appliances in this house.
+     */
     private Set<ElectricalAppliance> appliances = new HashSet<>();
 
     private House() {}
