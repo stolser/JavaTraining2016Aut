@@ -1,7 +1,7 @@
-package com.stolser.javatraining.designpatterns.structural.iterator.container;
+package com.stolser.javatraining.designpatterns.behavioral.iterator.container;
 
-import com.stolser.javatraining.designpatterns.structural.iterator.iterator.Iterable;
-import com.stolser.javatraining.designpatterns.structural.iterator.iterator.Iterator;
+import com.stolser.javatraining.designpatterns.behavioral.iterator.iterator.Iterable;
+import com.stolser.javatraining.designpatterns.behavioral.iterator.iterator.Iterator;
 
 public class MyContainer implements Iterable<String> {
     private String[] words;

@@ -1,8 +1,8 @@
-package com.stolser.javatraining.designpatterns.structural.iterator;
+package com.stolser.javatraining.designpatterns.behavioral.iterator;
 
-import com.stolser.javatraining.designpatterns.structural.iterator.container.MyContainer;
-import com.stolser.javatraining.designpatterns.structural.iterator.iterator.Iterable;
-import com.stolser.javatraining.designpatterns.structural.iterator.iterator.Iterator;
+import com.stolser.javatraining.designpatterns.behavioral.iterator.container.MyContainer;
+import com.stolser.javatraining.designpatterns.behavioral.iterator.iterator.Iterable;
+import com.stolser.javatraining.designpatterns.behavioral.iterator.iterator.Iterator;
 
 public class Client {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.stolser.javatraining.designpatterns.structural.delegate.delegatee;
+package com.stolser.javatraining.designpatterns.behavioral.delegate.delegatee;
 
 public class Rectangle implements Graphics {
     @Override

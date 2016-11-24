@@ -1,6 +1,6 @@
-package com.stolser.javatraining.designpatterns.structural.delegate.delegator;
+package com.stolser.javatraining.designpatterns.behavioral.delegate.delegator;
 
-import com.stolser.javatraining.designpatterns.structural.delegate.delegatee.Graphics;
+import com.stolser.javatraining.designpatterns.behavioral.delegate.delegatee.Graphics;
 
 public class Painter {
     private Graphics graphics;
