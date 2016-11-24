@@ -4,7 +4,7 @@ import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class HouseTest {
 
     private House house;
-    private Set<ElectricalAppliance> appliances;
+    private List<ElectricalAppliance> appliances;
 
     @Before
     public void setUp() throws Exception {

@@ -12,8 +12,8 @@ import com.stolser.javatraining.project01.model.appliance.tools.Drill;
 import com.stolser.javatraining.project01.model.appliance.tools.ElectricalTool;
 import com.stolser.javatraining.project01.model.appliance.tools.LithiumBattery;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.stolser.javatraining.project01.model.appliance.ApplianceType.*;
 
@@ -21,8 +21,8 @@ import static com.stolser.javatraining.project01.model.appliance.ApplianceType.*
  * Contains static methods for initialization purposes.
  */
 public class ApplianceInitializer {
-    public static Set<ElectricalAppliance> getAppliances() {
-        Set<ElectricalAppliance> appliances = new HashSet<>();
+    public static List<ElectricalAppliance> getAppliances() {
+        List<ElectricalAppliance> appliances = new ArrayList<>();
 
         ElectricalAppliance hoover = new Hoover(CLEANING, "Philips", 5.2);
         hoover.setMotor(new SimpleMotor(320));

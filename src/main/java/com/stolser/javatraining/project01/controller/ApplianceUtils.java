@@ -1,15 +1,14 @@
 package com.stolser.javatraining.project01.controller;
 
 import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
-import com.stolser.javatraining.project01.model.appliance.EmptyElectricalAppliance;
 
-import java.util.NavigableSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import static com.stolser.javatraining.project01.controller.SortingOrder.BY_POWER_ASC;
-import static com.stolser.javatraining.project01.controller.SortingOrder.BY_PRICE_ASC;
-import static com.stolser.javatraining.project01.controller.SortingOrder.BY_WEIGHT_ASC;
+import static com.stolser.javatraining.project01.controller.SortingOrder.*;
 
 /**
  * Contains static methods for working with appliances.
@@ -17,102 +16,99 @@ import static com.stolser.javatraining.project01.controller.SortingOrder.BY_WEIG
 public class ApplianceUtils {
     /**
      * Sorts a set passed in as an argument according to the provided sorting order.
-     * @param unsorted a set to be sorted
+     *
+     * @param unsorted     a set to be sorted
      * @param sortingOrder a sorting order
      * @return a sorted set
      */
-    public static NavigableSet<ElectricalAppliance> getSorted(Set<ElectricalAppliance> unsorted,
-                                                                    SortingOrder sortingOrder) {
-        NavigableSet<ElectricalAppliance> sorted = new TreeSet<>(sortingOrder.getOrder());
-        sorted.addAll(unsorted);
+    public static void sortAppliances(List<ElectricalAppliance> unsorted,
+                                      SortingOrder sortingOrder) {
 
-        return sorted;
+        Collections.sort(unsorted, sortingOrder.getOrder());
     }
 
     /**
-     * Exploits {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}
-     * to get appliances with price in the specified range.
+     * Selects appliances with price in the specified range.
+     *
      * @param original unfiltered appliances to be filtered by the price value
      * @param priceMin the lower price limit for appliances to be included in the result. <br />
      *                 If priceMin >= priceMax the result will be same as the original appliances
      * @param priceMax the upper price limit for appliances to be included in the result
      * @return filtered appliances
      */
-    public static Set<ElectricalAppliance> getFilteredByPrice(Set<ElectricalAppliance> original,
-                                                              double priceMin, double priceMax) {
+    public static List<ElectricalAppliance> getFilteredByPrice(List<ElectricalAppliance> original,
+                                                               double priceMin, double priceMax) {
 
-        Set<ElectricalAppliance> result;
-        EmptyElectricalAppliance lowerFilteringLimits;
-        EmptyElectricalAppliance upperFilteringLimits;
+        List<ElectricalAppliance> result;
 
-        if (priceMin < priceMax) {
-            lowerFilteringLimits = new EmptyElectricalAppliance();
-            upperFilteringLimits = new EmptyElectricalAppliance();
-            lowerFilteringLimits.setPrice(priceMin);
-            upperFilteringLimits.setPrice(priceMax);
+        if (priceMin <= priceMax) {
 
-            result = getSorted(original, BY_PRICE_ASC)
-                    .subSet(lowerFilteringLimits, true, upperFilteringLimits, true);
+            sortAppliances(original, BY_PRICE_ASC);
+            result = getInsideRange(original, item ->
+                    (item.getPrice() >= priceMin) && (item.getPrice() <= priceMax));
+
         } else {
-            result = original;
+            result = new ArrayList<>(original);
         }
 
         return result;
     }
 
+    private static List<ElectricalAppliance> getInsideRange(List<ElectricalAppliance> original,
+                                                            Predicate<ElectricalAppliance> insideRange) {
+        return original.stream()
+                .filter(insideRange)
+                .collect(Collectors.toList());
+    }
+
     /**
-     * Exploits {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}
-     * to get appliances with power in the specified range.
+     * Selects appliances with power in the specified range.
+     *
      * @param original unfiltered appliances to be filtered by the power value
      * @param powerMin the lower power limit for appliances to be included in the result. <br />
      *                 If priceMin >= priceMax the result will be same as the original appliances
      * @param powerMax the upper power limit for appliances to be included in the result
      * @return filtered appliances
      */
-    public static Set<ElectricalAppliance> getFilteredByPower(Set<ElectricalAppliance> original,
+    public static List<ElectricalAppliance> getFilteredByPower(List<ElectricalAppliance> original,
                                                                double powerMin, double powerMax) {
 
-        Set<ElectricalAppliance> result;
+        List<ElectricalAppliance> result;
 
-        if (powerMin < powerMax) {
-            EmptyElectricalAppliance lowerFilteringLimits = new EmptyElectricalAppliance();
-            EmptyElectricalAppliance upperFilteringLimits = new EmptyElectricalAppliance();
-            lowerFilteringLimits.setMaxPower(powerMin);
-            upperFilteringLimits.setMaxPower(powerMax);
+        if (powerMin <= powerMax) {
 
-            result = getSorted(original, BY_POWER_ASC)
-                    .subSet(lowerFilteringLimits, true, upperFilteringLimits, true);
+            sortAppliances(original, BY_POWER_ASC);
+            result = getInsideRange(original, item ->
+                    (item.getMaxPower() >= powerMin) && (item.getMaxPower() <= powerMax));
+
         } else {
-            result = original;
+            result = new ArrayList<>(original);
         }
 
         return result;
     }
 
     /**
-     * Exploits {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)}
-     * to get appliances with weight in the specified range.
-     * @param original unfiltered appliances to be filtered by the weight value
+     * Selects appliances with weight in the specified range.
+     *
+     * @param original  unfiltered appliances to be filtered by the weight value
      * @param weightMin the lower weight limit for appliances to be included in the result. <br />
-     *                 If priceMin >= priceMax the result will be same as the original appliances
+     *                  If priceMin >= priceMax the result will be same as the original appliances
      * @param weightMax the upper weight limit for appliances to be included in the result
      * @return filtered appliances
      */
-    public static Set<ElectricalAppliance> getFilteredByWeight(Set<ElectricalAppliance> original,
-                                                              double weightMin, double weightMax) {
+    public static List<ElectricalAppliance> getFilteredByWeight(List<ElectricalAppliance> original,
+                                                                double weightMin, double weightMax) {
 
-        Set<ElectricalAppliance> result;
+        List<ElectricalAppliance> result;
 
-        if (weightMin < weightMax) {
-            EmptyElectricalAppliance lowerFilteringLimits = new EmptyElectricalAppliance();
-            EmptyElectricalAppliance upperFilteringLimits = new EmptyElectricalAppliance();
-            lowerFilteringLimits.setWeight(weightMin);
-            upperFilteringLimits.setWeight(weightMax);
+        if (weightMin <= weightMax) {
 
-            result = getSorted(original, BY_WEIGHT_ASC)
-                    .subSet(lowerFilteringLimits, true, upperFilteringLimits, true);
+            sortAppliances(original, BY_WEIGHT_ASC);
+            result = getInsideRange(original, item ->
+                    (item.getWeight() >= weightMin) && (item.getWeight() <= weightMax));
         } else {
-            result = original;
+            result = new ArrayList<>(original);
         }
 
         return result;
