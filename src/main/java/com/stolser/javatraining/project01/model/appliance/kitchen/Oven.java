@@ -35,4 +35,9 @@ public class Oven extends AbstractElectricalAppliance {
         isSwitchedOn = false;
         currentPower = 0;
     }
+
+    @Override
+    public double getCurrentPower() {
+        return getMaxPower() * EFFICIENCY_RATION;
+    }
 }

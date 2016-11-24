@@ -39,6 +39,11 @@ public class AudioSystem extends AbstractElectricalAppliance implements Audible 
     }
 
     @Override
+    public double getCurrentPower() {
+        return getMaxPower() * EFFICIENCY_RATION;
+    }
+
+    @Override
     public void playMusic() {
         if (isSwitchedOn) {
             LOGGER.debug(String.format(AUDIO_SYSTEM_IS_PLAYING_MUSIC, speaker.getVolume()));

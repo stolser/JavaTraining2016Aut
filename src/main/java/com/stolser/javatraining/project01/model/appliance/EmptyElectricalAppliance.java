@@ -7,6 +7,7 @@ import com.stolser.javatraining.project01.controller.FilteringController;
  * as parameters for the {@link java.util.TreeSet#subSet(Object, boolean, Object, boolean)} method.
  */
 public class EmptyElectricalAppliance extends AbstractElectricalAppliance {
+    private static final double EFFICIENCY_RATION = 0.8;
     private double power;
     private double price;
     private double weight;
@@ -53,5 +54,10 @@ public class EmptyElectricalAppliance extends AbstractElectricalAppliance {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public double getCurrentPower() {
+        return getMaxPower() * EFFICIENCY_RATION;
     }
 }

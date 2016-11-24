@@ -65,9 +65,7 @@ public abstract class AbstractElectricalAppliance implements ElectricalAppliance
     }
 
     @Override
-    public double getCurrentPower() {
-        return currentPower;
-    }
+    public abstract double getCurrentPower();
 
     public void setMotor(Motor motor) {
         checkNotNull(motor);
