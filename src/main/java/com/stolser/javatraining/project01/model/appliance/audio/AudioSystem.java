@@ -20,18 +20,16 @@ public class AudioSystem extends AbstractElectricalAppliance implements Audible 
     @Override
     public void switchOn() {
         isSwitchedOn = true;
-        currentPower = getMaxPower() * EFFICIENCY_RATION;
     }
 
     @Override
     public void switchOff() {
         isSwitchedOn = false;
-        currentPower = 0;
     }
 
     @Override
     public double getCurrentPower() {
-        return getMaxPower() * EFFICIENCY_RATION;
+        return isSwitchedOn ? (getMaxPower() * EFFICIENCY_RATION) : 0;
     }
 
     @Override

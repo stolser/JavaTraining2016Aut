@@ -19,12 +19,12 @@ public class Drill extends ElectricalTool {
     @Override
     public void switchOn() {
         if (accumulatorCanBeUsed()) {
-            isSwitchedOn = true;
-            currentPower = getMaxPower() * EFFICIENCY_RATION;
-        } else {
-            isSwitchedOn = true;
-            currentPower = getMaxPower() * EFFICIENCY_RATION;
+            accumulator.switchOn();
+            accumulator.usePower();
         }
+
+        isSwitchedOn = true;
+
     }
 
     private boolean accumulatorCanBeUsed() {
@@ -33,12 +33,20 @@ public class Drill extends ElectricalTool {
 
     @Override
     public void switchOff() {
+        if (accumulator.isOn()) {
+            accumulator.switchOff();
+        }
+
         isSwitchedOn = false;
-        currentPower = 0;
     }
 
     @Override
     public double getCurrentPower() {
-        return getMaxPower() * EFFICIENCY_RATION;
+        double currentPower = 0;
+        if (! accumulator.isOn()) {
+            currentPower = getMaxPower() * EFFICIENCY_RATION;
+        }
+
+        return isSwitchedOn ? currentPower : 0;
     }
 }

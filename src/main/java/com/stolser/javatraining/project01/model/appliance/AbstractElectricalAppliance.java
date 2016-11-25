@@ -15,7 +15,6 @@ public abstract class AbstractElectricalAppliance implements ElectricalAppliance
     private double price;
     private double weight;
     protected boolean isSwitchedOn;
-    protected double currentPower;
 
     public AbstractElectricalAppliance(ApplianceType type, String brand, double weight) {
         checkNotNull(type);
