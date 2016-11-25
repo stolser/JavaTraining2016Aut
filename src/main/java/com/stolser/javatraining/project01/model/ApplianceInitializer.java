@@ -48,6 +48,7 @@ public class ApplianceInitializer {
         drill.setMotor(new SimpleMotor(110));
         drill.setPrice(190);
         drill.setAccumulator(new LithiumBattery(120));
+//        drill.switchOnAccumulator();
         appliances.add(drill);
 
         AudioSystem audioSystem = new AudioSystem(OFFICE, "F&D", 7);

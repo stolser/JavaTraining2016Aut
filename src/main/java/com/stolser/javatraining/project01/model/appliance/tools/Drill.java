@@ -19,7 +19,6 @@ public class Drill extends ElectricalTool {
     @Override
     public void switchOn() {
         if (accumulatorCanBeUsed()) {
-            accumulator.switchOn();
             accumulator.usePower();
         }
 

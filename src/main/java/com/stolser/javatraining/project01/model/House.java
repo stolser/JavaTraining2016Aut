@@ -67,7 +67,6 @@ public class House {
      */
     public double getPowerConsumption() {
         return appliances.stream()
-                .filter(ElectricalAppliance::isOn)
                 .mapToDouble(ElectricalAppliance::getCurrentPower)
                 .sum();
     }
