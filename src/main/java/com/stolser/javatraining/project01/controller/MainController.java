@@ -28,12 +28,14 @@ public class MainController {
      */
     private List<ElectricalAppliance> appliances;
     private SortingOrder sortingOrder;
+    private FilteringController filteringController;
     private ViewPrinter out;
     private InputReader in;
 
     public MainController(ViewPrinter out, InputReader in) {
         this.out = out;
         this.in = in;
+        filteringController = new FilteringController(out);
     }
 
     /**
@@ -59,7 +61,6 @@ public class MainController {
 
         sortAppliancesAndPrintResult();
 
-        FilteringController filteringController = new FilteringController(out);
         filteringController.filterAppliancesAndPrintResult(appliances);
     }
 

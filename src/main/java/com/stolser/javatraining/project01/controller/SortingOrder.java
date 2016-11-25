@@ -9,17 +9,17 @@ import java.util.Comparator;
  */
 public enum SortingOrder {
     BY_PRICE_ASC("By price, from the cheapest",
-            (first, second) -> (Double.compare(first.getPrice(), second.getPrice()))),
+            Comparator.comparing(ElectricalAppliance::getPrice)),
     BY_PRICE_DESC("By price, from the most expensive",
-            (first, second) -> (Double.compare(second.getPrice(), first.getPrice()))),
+            Comparator.comparing(ElectricalAppliance::getPrice).reversed()),
     BY_POWER_ASC("By power, form the least powerful",
-            (first, second) -> (Double.compare(first.getMaxPower(), second.getMaxPower()))),
+            Comparator.comparing(ElectricalAppliance::getMaxPower)),
     BY_POWER_DESC("By power, form the most powerful",
-            (first, second) -> (Double.compare(second.getMaxPower(), first.getMaxPower()))),
+            Comparator.comparing(ElectricalAppliance::getMaxPower).reversed()),
     BY_WEIGHT_ASC("By weight, form the lightest",
-            (first, second) -> (Double.compare(first.getWeight(), second.getWeight()))),
+            Comparator.comparing(ElectricalAppliance::getWeight)),
     BY_WEIGHT_DESC("By weight, form the heaviest",
-            (first, second) -> (Double.compare(second.getWeight(), first.getWeight())));
+            Comparator.comparing(ElectricalAppliance::getWeight).reversed());
 
     /**
      * Displayed to a user in the menu.
