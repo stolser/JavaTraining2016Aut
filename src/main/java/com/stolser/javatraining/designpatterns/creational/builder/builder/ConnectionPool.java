@@ -1,4 +1,4 @@
-package com.stolser.javatraining.designpatterns.creational.builder;
+package com.stolser.javatraining.designpatterns.creational.builder.builder;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
