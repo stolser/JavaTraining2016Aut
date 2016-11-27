@@ -18,4 +18,8 @@ public abstract class ElectricalTool extends AbstractElectricalAppliance {
         Preconditions.checkNotNull("Accumulator cannot be null.", accumulator);
         this.accumulator = accumulator;
     }
+
+    public void switchOnAccumulator() {
+        accumulator.switchOn();
+    }
 }

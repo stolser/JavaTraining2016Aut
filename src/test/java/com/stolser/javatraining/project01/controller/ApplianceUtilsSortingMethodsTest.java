@@ -7,12 +7,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.NavigableSet;
-import java.util.Set;
+import java.util.List;
+
+import static com.stolser.javatraining.project01.controller.ApplianceUtils.*;
+import static com.stolser.javatraining.project01.controller.SortingOrder.*;
 
 public class ApplianceUtilsSortingMethodsTest {
     private House house;
-    private Set<ElectricalAppliance> appliances;
+    private List<ElectricalAppliance> appliances;
 
     @Before
     public void setUp() throws Exception {
@@ -24,116 +26,108 @@ public class ApplianceUtilsSortingMethodsTest {
 
     @Test
     public void getSorted_Should_Sort_ByPowerDesc_Correctly() {
-        NavigableSet<ElectricalAppliance> sorted =
-                ApplianceUtils.getSorted(appliances, SortingOrder.BY_POWER_DESC);
-        int sortedElementsNumber = sorted.size()/2;
+        sortAppliances(appliances, BY_POWER_DESC);
 
-        sorted.stream().forEach(System.out::println);
+        printAppliances();
 
-        for(int i = 1; i <= sortedElementsNumber; i++) {
-            double firstPower = sorted.pollFirst().getMaxPower();
-            double secondPower = sorted.pollFirst().getMaxPower();
+        for (int i = 0; i < appliances.size() - 1; i++) {
+            double firstPower = appliances.get(i).getMaxPower();
+            double nextPower = appliances.get(i + 1).getMaxPower();
 
-            System.out.printf("i = %d; firstPower = %s; secondPower = %s\n", i, firstPower, secondPower);
+            System.out.printf("i = %d; firstPower = %s; nextPower = %s\n", i, firstPower, nextPower);
 
-            Assert.assertTrue(firstPower >= secondPower);
+            Assert.assertTrue(firstPower >= nextPower);
         }
 
     }
 
     @Test
     public void getSorted_Should_Sort_ByPowerAsc_Correctly() {
-        NavigableSet<ElectricalAppliance> sorted =
-                ApplianceUtils.getSorted(appliances, SortingOrder.BY_POWER_ASC);
-        int sortedElementsNumber = sorted.size()/2;
+        sortAppliances(appliances, BY_POWER_ASC);
 
-        sorted.stream().forEach(System.out::println);
+        printAppliances();
 
-        for(int i = 1; i <= sortedElementsNumber; i++) {
-            double firstPower = sorted.pollFirst().getMaxPower();
-            double secondPower = sorted.pollFirst().getMaxPower();
+        for (int i = 0; i < appliances.size() - 1; i++) {
+            double firstPower = appliances.get(i).getMaxPower();
+            double nextPower = appliances.get(i + 1).getMaxPower();
 
-            System.out.printf("i = %d; firstPower = %s; secondPower = %s\n", i, firstPower, secondPower);
+            System.out.printf("i = %d; firstPower = %s; nextPower = %s\n", i, firstPower, nextPower);
 
-            Assert.assertTrue(firstPower <= secondPower);
+            Assert.assertTrue(firstPower <= nextPower);
         }
 
     }
 
     @Test
     public void getSorted_Should_Sort_ByPriceDesc_Correctly() {
-        NavigableSet<ElectricalAppliance> sorted =
-                ApplianceUtils.getSorted(appliances, SortingOrder.BY_PRICE_DESC);
-        int sortedElementsNumber = sorted.size()/2;
+        sortAppliances(appliances, BY_PRICE_DESC);
 
-        sorted.stream().forEach(System.out::println);
+        printAppliances();
 
-        for(int i = 1; i <= sortedElementsNumber; i++) {
-            double firstPrice = sorted.pollFirst().getPrice();
-            double secondPrice = sorted.pollFirst().getPrice();
+        for (int i = 0; i < appliances.size() - 1; i++) {
+            double firstPrice = appliances.get(i).getPrice();
+            double nextPrice = appliances.get(i + 1).getPrice();
 
-            System.out.printf("i = %d; firstPrice = %s; secondPrice = %s\n", i, firstPrice, secondPrice);
+            System.out.printf("i = %d; firstPrice = %s; nextPrice = %s\n", i, firstPrice, nextPrice);
 
-            Assert.assertTrue(firstPrice >= secondPrice);
+            Assert.assertTrue(firstPrice >= nextPrice);
         }
 
     }
 
     @Test
     public void getSorted_Should_Sort_ByPriceAsc_Correctly() {
-        NavigableSet<ElectricalAppliance> sorted =
-                ApplianceUtils.getSorted(appliances, SortingOrder.BY_PRICE_ASC);
-        int sortedElementsNumber = sorted.size()/2;
+        sortAppliances(appliances, BY_PRICE_ASC);
 
-        sorted.stream().forEach(System.out::println);
+        printAppliances();
 
-        for(int i = 1; i <= sortedElementsNumber; i++) {
-            double firstPrice = sorted.pollFirst().getPrice();
-            double secondPrice = sorted.pollFirst().getPrice();
+        for (int i = 0; i < appliances.size() - 1; i++) {
+            double firstPrice = appliances.get(i).getPrice();
+            double nextPrice = appliances.get(i + 1).getPrice();
 
-            System.out.printf("i = %d; firstPrice = %s; secondPrice = %s\n", i, firstPrice, secondPrice);
+            System.out.printf("i = %d; firstPrice = %s; nextPrice = %s\n", i, firstPrice, nextPrice);
 
-            Assert.assertTrue(firstPrice <= secondPrice);
+            Assert.assertTrue(firstPrice <= nextPrice);
         }
 
     }
 
     @Test
     public void getSorted_Should_Sort_ByWeightDesc_Correctly() {
-        NavigableSet<ElectricalAppliance> sorted =
-                ApplianceUtils.getSorted(appliances, SortingOrder.BY_WEIGHT_DESC);
-        int sortedElementsNumber = sorted.size()/2;
+        sortAppliances(appliances, BY_WEIGHT_DESC);
 
-        sorted.stream().forEach(System.out::println);
+        printAppliances();
 
-        for(int i = 1; i <= sortedElementsNumber; i++) {
-            double firstWeight = sorted.pollFirst().getWeight();
-            double secondWeight = sorted.pollFirst().getWeight();
+        for (int i = 0; i < appliances.size() - 1; i++) {
+            double firstWeight = appliances.get(i).getWeight();
+            double nextWeight = appliances.get(i + 1).getWeight();
 
-            System.out.printf("i = %d; firstWeight = %s; secondWeight = %s\n", i, firstWeight, secondWeight);
+            System.out.printf("i = %d; firstWeight = %s; nextWeight = %s\n", i, firstWeight, nextWeight);
 
-            Assert.assertTrue(firstWeight >= secondWeight);
+            Assert.assertTrue(firstWeight >= nextWeight);
         }
 
     }
 
     @Test
     public void getSorted_Should_Sort_ByWeightAsc_Correctly() {
-        NavigableSet<ElectricalAppliance> sorted =
-                ApplianceUtils.getSorted(appliances, SortingOrder.BY_WEIGHT_ASC);
-        int sortedElementsNumber = sorted.size()/2;
+        sortAppliances(appliances, BY_WEIGHT_ASC);
 
-        sorted.stream().forEach(System.out::println);
+        printAppliances();
 
-        for(int i = 1; i <= sortedElementsNumber; i++) {
-            double firstWeight = sorted.pollFirst().getWeight();
-            double secondWeight = sorted.pollFirst().getWeight();
+        for (int i = 0; i < appliances.size() - 1; i++) {
+            double firstWeight = appliances.get(i).getWeight();
+            double nextWeight = appliances.get(i + 1).getWeight();
 
-            System.out.printf("i = %d; firstWeight = %s; secondWeight = %s\n", i, firstWeight, secondWeight);
+            System.out.printf("i = %d; firstWeight = %s; nextWeight = %s\n", i, firstWeight, nextWeight);
 
-            Assert.assertTrue(firstWeight <= secondWeight);
+            Assert.assertTrue(firstWeight <= nextWeight);
         }
 
+    }
+
+    private void printAppliances() {
+        appliances.stream().forEach(System.out::println);
     }
 
 }

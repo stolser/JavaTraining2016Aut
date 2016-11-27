@@ -8,9 +8,9 @@ import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Set;
+import java.util.List;
 
-import static com.stolser.javatraining.project01.controller.ApplianceUtils.getSorted;
+import static com.stolser.javatraining.project01.controller.ApplianceUtils.sortAppliances;
 import static java.lang.String.format;
 
 /**
@@ -26,14 +26,16 @@ public class MainController {
     /**
      * A set of appliances to be sorted and filtered.
      */
-    private Set<ElectricalAppliance> appliances;
+    private List<ElectricalAppliance> appliances;
     private SortingOrder sortingOrder;
+    private FilteringController filteringController;
     private ViewPrinter out;
     private InputReader in;
 
     public MainController(ViewPrinter out, InputReader in) {
         this.out = out;
         this.in = in;
+        filteringController = new FilteringController(out);
     }
 
     /**
@@ -59,7 +61,6 @@ public class MainController {
 
         sortAppliancesAndPrintResult();
 
-        FilteringController filteringController = new FilteringController(out);
         filteringController.filterAppliancesAndPrintResult(appliances);
     }
 
@@ -117,8 +118,8 @@ public class MainController {
     private void printAllAppliancesSorted() {
         out.printlnString(format(APPLIANCES_SORTED_TEXT, sortingOrder));
 
-        getSorted(appliances, sortingOrder)
-                .stream()
+        sortAppliances(appliances, sortingOrder);
+        appliances.stream()
                 .map(Object::toString)
                 .forEach(out::printlnString);
 

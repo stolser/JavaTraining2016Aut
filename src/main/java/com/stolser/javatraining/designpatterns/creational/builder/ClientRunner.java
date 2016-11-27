@@ -1,5 +1,7 @@
 package com.stolser.javatraining.designpatterns.creational.builder;
 
+import com.stolser.javatraining.designpatterns.creational.builder.builder.ConnectionPool;
+
 import java.sql.SQLException;
 
 public class ClientRunner {

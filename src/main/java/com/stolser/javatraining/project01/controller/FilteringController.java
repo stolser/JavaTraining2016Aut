@@ -5,8 +5,8 @@ import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.stolser.javatraining.project01.controller.ApplianceUtils.*;
@@ -53,7 +53,7 @@ public class FilteringController {
      * @param appliances items to be filtered
      * @throws IOException if an exception errors during reading params from a file
      */
-    public void filterAppliancesAndPrintResult(Set<ElectricalAppliance> appliances) throws IOException {
+    public void filterAppliancesAndPrintResult(List<ElectricalAppliance> appliances) throws IOException {
         checkNotNull("A set of appliances for filtering cannot be null", appliances);
 
         loadFilteringParamsFromFile();
@@ -61,11 +61,11 @@ public class FilteringController {
         filterByWeight(filterByPower(filterByPrice(appliances)));
     }
 
-    private Set<ElectricalAppliance> filterByPrice(Set<ElectricalAppliance> unfiltered) {
+    private List<ElectricalAppliance> filterByPrice(List<ElectricalAppliance> unfiltered) {
         double priceMin = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_PRICE_MIN));
         double priceMax = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_PRICE_MAX));
 
-        Set<ElectricalAppliance> results = getFilteredByPrice(unfiltered, priceMin, priceMax);
+        List<ElectricalAppliance> results = getFilteredByPrice(unfiltered, priceMin, priceMax);
 
         out.printlnString(format(APPLIANCES_LIMITED_BY_PRICE_TEXT, priceMin, priceMax));
         printAppliances(results);
@@ -73,11 +73,11 @@ public class FilteringController {
         return results;
     }
 
-    private Set<ElectricalAppliance> filterByPower(Set<ElectricalAppliance> unfiltered) {
+    private List<ElectricalAppliance> filterByPower(List<ElectricalAppliance> unfiltered) {
         double powerMin = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_POWER_MIN));
         double powerMax = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_POWER_MAX));
 
-        Set<ElectricalAppliance> results = getFilteredByPower(unfiltered, powerMin, powerMax);
+        List<ElectricalAppliance> results = getFilteredByPower(unfiltered, powerMin, powerMax);
 
         out.printlnString(format(APPLIANCES_LIMITED_BY_POWER_TEXT, powerMin, powerMax));
         printAppliances(results);
@@ -85,11 +85,11 @@ public class FilteringController {
         return results;
     }
 
-    private Set<ElectricalAppliance> filterByWeight(Set<ElectricalAppliance> unfiltered) {
+    private List<ElectricalAppliance> filterByWeight(List<ElectricalAppliance> unfiltered) {
         double weightMin = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_WEIGHT_MIN));
         double weightMax = Double.valueOf(filteringParams.getProperty(FILTERPARAMS_WEIGHT_MAX));
 
-        Set<ElectricalAppliance> results = getFilteredByWeight(unfiltered, weightMin, weightMax);
+        List<ElectricalAppliance> results = getFilteredByWeight(unfiltered, weightMin, weightMax);
 
         out.printlnString(format(APPLIANCES_LIMITED_BY_WEIGHT_TEXT, weightMin, weightMax));
         printAppliances(results);
@@ -97,7 +97,7 @@ public class FilteringController {
         return results;
     }
 
-    private void printAppliances(Set<ElectricalAppliance> appliances) {
+    private void printAppliances(List<ElectricalAppliance> appliances) {
         appliances.stream()
                 .map(Object::toString)
                 .forEach(out::printlnString);

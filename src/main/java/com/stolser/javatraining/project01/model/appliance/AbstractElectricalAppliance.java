@@ -15,7 +15,6 @@ public abstract class AbstractElectricalAppliance implements ElectricalAppliance
     private double price;
     private double weight;
     protected boolean isSwitchedOn;
-    protected double currentPower;
 
     public AbstractElectricalAppliance(ApplianceType type, String brand, double weight) {
         checkNotNull(type);
@@ -65,9 +64,7 @@ public abstract class AbstractElectricalAppliance implements ElectricalAppliance
     }
 
     @Override
-    public double getCurrentPower() {
-        return currentPower;
-    }
+    public abstract double getCurrentPower();
 
     public void setMotor(Motor motor) {
         checkNotNull(motor);

@@ -6,17 +6,15 @@ import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Set;
+import java.util.List;
 
-import static com.stolser.javatraining.project01.controller.ApplianceUtils.getFilteredByPower;
-import static com.stolser.javatraining.project01.controller.ApplianceUtils.getFilteredByPrice;
-import static com.stolser.javatraining.project01.controller.ApplianceUtils.getFilteredByWeight;
+import static com.stolser.javatraining.project01.controller.ApplianceUtils.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ApplianceUtilsFilteringMethodsTest {
     private House house;
-    private Set<ElectricalAppliance> appliances;
+    private List<ElectricalAppliance> appliances;
 
     @Before
     public void setUp() throws Exception {
@@ -32,10 +30,10 @@ public class ApplianceUtilsFilteringMethodsTest {
 
         printAll(appliances, "-----------Original unfiltered:");
 
-        Set<ElectricalAppliance> filtered = getFilteredByPrice(appliances, priceMin, priceMax);
+        List<ElectricalAppliance> filtered = getFilteredByPrice(appliances, priceMin, priceMax);
         printAll(filtered, "-----------Filtered results:");
 
-        assertEquals(3, filtered.size());
+        assertEquals(4, filtered.size());
 
         filtered.stream()
                 .forEach(appliance -> {
@@ -52,7 +50,7 @@ public class ApplianceUtilsFilteringMethodsTest {
 
         printAll(appliances, "-----------Original unfiltered:");
 
-        Set<ElectricalAppliance> filtered = getFilteredByPower(appliances, powerMin, powerMax);
+        List<ElectricalAppliance> filtered = getFilteredByPower(appliances, powerMin, powerMax);
         printAll(filtered, "-----------Filtered results:");
 
         assertEquals(2, filtered.size());
@@ -71,7 +69,7 @@ public class ApplianceUtilsFilteringMethodsTest {
 
         printAll(appliances, "-----------Original unfiltered:");
 
-        Set<ElectricalAppliance> filtered = getFilteredByWeight(appliances, weightMin, weightMax);
+        List<ElectricalAppliance> filtered = getFilteredByWeight(appliances, weightMin, weightMax);
         printAll(filtered, "-----------Filtered results:");
 
         assertEquals(5, filtered.size());
@@ -83,7 +81,7 @@ public class ApplianceUtilsFilteringMethodsTest {
                 });
     }
 
-    private void printAll(Set<ElectricalAppliance> toPrint, String titleText) {
+    private void printAll(List<ElectricalAppliance> toPrint, String titleText) {
         System.out.println(titleText);
         toPrint.stream().forEach(System.out::println);
         System.out.println("-----------------------------------------------------------");

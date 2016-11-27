@@ -1,7 +1,7 @@
 package com.stolser.javatraining.project01.model.appliance.engine;
 
 /**
- * Provides a public API to manipulate components that convert electricity into motion.
+ * Provides a public API to manipulate components driven by electricity.
  */
 public interface Motor {
     /**

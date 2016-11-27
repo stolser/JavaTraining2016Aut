@@ -5,9 +5,7 @@ import com.stolser.javatraining.project01.model.appliance.ElectricalAppliance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A container for appliances.
@@ -20,14 +18,14 @@ public class House {
     /**
      * All the appliances in this house.
      */
-    private Set<ElectricalAppliance> appliances = new HashSet<>();
+    private List<ElectricalAppliance> appliances = new ArrayList<>();
 
     private House() {}
 
     /**
      * @param appliances a group of appliances to be added to this house
      */
-    public void addAppliances(Set<ElectricalAppliance> appliances) {
+    public void addAppliances(List<ElectricalAppliance> appliances) {
         Preconditions.checkNotNull("appliances cannot be null.", appliances);
         this.appliances.addAll(appliances);
     }
@@ -69,7 +67,6 @@ public class House {
      */
     public double getPowerConsumption() {
         return appliances.stream()
-                .filter(ElectricalAppliance::isOn)
                 .mapToDouble(ElectricalAppliance::getCurrentPower)
                 .sum();
     }
