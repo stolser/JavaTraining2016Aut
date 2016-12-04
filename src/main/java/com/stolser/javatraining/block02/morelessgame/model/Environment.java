@@ -1,10 +1,7 @@
 package com.stolser.javatraining.block02.morelessgame.model;
 
-import com.stolser.javatraining.block02.morelessgame.view.ConsoleViewFactory;
-import com.stolser.javatraining.block02.morelessgame.view.ViewFactory;
-import com.stolser.javatraining.generalMVC.controller.ConsoleInputReader;
-import com.stolser.javatraining.generalMVC.controller.InputReader;
 import com.stolser.javatraining.block02.morelessgame.view.ViewGenerator;
+import com.stolser.javatraining.generalMVC.controller.InputReader;
 import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 
 /**
@@ -22,11 +19,8 @@ public class Environment {
         this.viewGenerator = viewGenerator;
     }
 
-    public static Environment newInstance() {
-        ViewFactory viewFactory = ConsoleViewFactory.newInstance();
-        ViewPrinter viewPrinter = viewFactory.getViewPrinter();
-        ViewGenerator viewGenerator = viewFactory.getViewGenerator();
-        InputReader inputReader = new ConsoleInputReader(viewPrinter);
+    public static Environment newInstance(InputReader inputReader, ViewPrinter viewPrinter,
+                                          ViewGenerator viewGenerator) {
 
         return new Environment(inputReader, viewPrinter, viewGenerator);
     }

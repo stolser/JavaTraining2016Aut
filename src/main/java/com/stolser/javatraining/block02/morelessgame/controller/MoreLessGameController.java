@@ -1,19 +1,18 @@
 package com.stolser.javatraining.block02.morelessgame.controller;
 
 import com.google.common.collect.Range;
+import com.stolser.javatraining.block02.morelessgame.model.Environment;
 import com.stolser.javatraining.block02.morelessgame.model.game.Game;
 import com.stolser.javatraining.block02.morelessgame.model.game.MoreLessGame;
 import com.stolser.javatraining.block02.morelessgame.model.game.UserAttempt;
-import com.stolser.javatraining.generalMVC.controller.InputReader;
-import com.stolser.javatraining.block02.morelessgame.model.Environment;
+import com.stolser.javatraining.block02.morelessgame.model.game.UserAttemptImpl;
 import com.stolser.javatraining.block02.morelessgame.view.ViewGenerator;
+import com.stolser.javatraining.generalMVC.controller.InputReader;
 import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Represents an abstraction of a game process. It contains methods for
@@ -24,11 +23,11 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class MoreLessGameController implements Game {
     private static final Logger LOGGER = LoggerFactory.getLogger(MoreLessGameController.class);
-    private static final String GENERAL_MESSAGE_BUNDLE = "generalMessages";
-    private static final String GAME_START_MESSAGE = "game.startMessage";
-    private static final String MENU_ENTER_NEXT_NUMBER = "menu.enterNextNumber";
-    private static final String INPUT_ENTER_NEXT_NUMBER_ERROR = "input.enterNextNumber.error";
-    private static final String GAME_TARGET_IS_HIT = "game.targetIsHit";
+    static final String GENERAL_MESSAGE_BUNDLE = "generalMessages";
+    static final String GAME_START_MESSAGE = "game.startMessage";
+    static final String MENU_ENTER_NEXT_NUMBER = "menu.enterNextNumber";
+    static final String INPUT_ENTER_NEXT_NUMBER_ERROR = "input.enterNextNumber.error";
+    static final String GAME_TARGET_IS_HIT = "game.targetIsHit";
 
     /**
      * Used to get and print i18ned messages.
@@ -109,7 +108,7 @@ public class MoreLessGameController implements Game {
         output.printlnMessageWithKey(GENERAL_MESSAGE_BUNDLE, GAME_START_MESSAGE);
     }
 
-    private void getNewNumberFromUser() {
+    void getNewNumberFromUser() {
         int userNumber;
         String enterNextNumberMessage = MessageFormat.format(
                 output.getMessageWithKey(GENERAL_MESSAGE_BUNDLE, MENU_ENTER_NEXT_NUMBER),
@@ -128,23 +127,24 @@ public class MoreLessGameController implements Game {
         userInput = userNumber;
     }
 
-    private UserAttempt createNewAttempt() {
-        UserAttempt newAttempt = new UserAttempt(gameModel.generateAndGetAttemptSerialNo(),
+    UserAttempt createNewAttempt() {
+        UserAttempt newAttempt = new UserAttemptImpl(gameModel.generateAndGetAttemptSerialNo(),
                 gameModel.getCurrentRange());
         newAttempt.setNumber(userInput);
+
         return newAttempt;
     }
 
-    private void checkInputNumberAndUpdateCurrentAttempt(UserAttempt currentAttempt) {
+    void checkInputNumberAndUpdateCurrentAttempt(UserAttempt currentAttempt) {
         if (userGuessedTheNumber()) {
-            currentAttempt.setResult(UserAttempt.AttemptResult.ATTEMPT_RESULT_SCORE);
+            currentAttempt.setResult(UserAttemptImpl.AttemptResult.ATTEMPT_RESULT_SCORE);
             targetIsNotHit = false;
         } else {
             if ( gameModel.secretNumberGraterThan(userInput)) {
-                currentAttempt.setResult(UserAttempt.AttemptResult.ATTEMPT_RESULT_TOO_SMALL);
+                currentAttempt.setResult(UserAttemptImpl.AttemptResult.ATTEMPT_RESULT_TOO_SMALL);
                 gameModel.setCurrentRange(getUpperSubRange());
             } else {
-                currentAttempt.setResult(UserAttempt.AttemptResult.ATTEMPT_RESULT_TOO_LARGE);
+                currentAttempt.setResult(UserAttemptImpl.AttemptResult.ATTEMPT_RESULT_TOO_LARGE);
                 gameModel.setCurrentRange(getLowerSubRange());
             }
 
@@ -168,7 +168,7 @@ public class MoreLessGameController implements Game {
         return ! gameModel.getCurrentRange().contains(userNumber);
     }
 
-    private void printStatisticsAboutGame() {
+    void printStatisticsAboutGame() {
         LOGGER.debug("...the secretNumber has been hit. The game is finished.");
         output.printlnMessageWithKey(GENERAL_MESSAGE_BUNDLE, GAME_TARGET_IS_HIT);
         output.printlnString(viewGenerator.getGameStatisticsView(gameModel.getUserAttempts()));

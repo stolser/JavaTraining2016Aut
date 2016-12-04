@@ -1,9 +1,9 @@
 package com.stolser.javatraining.block02.morelessgame.controller;
 
-import com.stolser.javatraining.generalMVC.controller.InputReader;
 import com.stolser.javatraining.block02.morelessgame.model.Environment;
 import com.stolser.javatraining.block02.morelessgame.model.menu.MenuItem;
 import com.stolser.javatraining.block02.morelessgame.view.ViewGenerator;
+import com.stolser.javatraining.generalMVC.controller.InputReader;
 import com.stolser.javatraining.generalMVC.view.ViewPrinter;
 
 /**
@@ -11,10 +11,10 @@ import com.stolser.javatraining.generalMVC.view.ViewPrinter;
  * and dispatching him to an appropriate action class.
  */
 public class MenuController {
-    private static final String GENERAL_MESSAGE_BUNDLE = "generalMessages";
-    private static final String CHOOSE_MENU_ITEM_TEXT = "menu.makeachoice";
-    private static final String INPUT_MENU_OPTION_ERROR = "input.menuoption.error";
-    private static final String EXIT_SYSTEM_NAME = "exit";
+    static final String GENERAL_MESSAGE_BUNDLE = "generalMessages";
+    static final String CHOOSE_MENU_ITEM_TEXT = "menu.makeachoice";
+    static final String INPUT_MENU_OPTION_ERROR = "input.menuoption.error";
+    static final String EXIT_SYSTEM_NAME = "exit";
 
     private MenuItem mainMenu;
     private InputReader input;
@@ -51,29 +51,32 @@ public class MenuController {
 
     }
 
-    private MenuItem askUserAndGetChosenMenuItem() {
+    MenuItem askUserAndGetChosenMenuItem() {
         MenuItem chosenMenuItem;
 
         do {
             output.printMessageWithKey(GENERAL_MESSAGE_BUNDLE, CHOOSE_MENU_ITEM_TEXT);
             int userChoice = readUserChoice();
             chosenMenuItem = mainMenu.getItemByOptionId(userChoice);
-            if (chosenMenuItem == null) output.printMessageWithKey(GENERAL_MESSAGE_BUNDLE, INPUT_MENU_OPTION_ERROR);
+
+            if (chosenMenuItem == null) {
+                output.printMessageWithKey(GENERAL_MESSAGE_BUNDLE, INPUT_MENU_OPTION_ERROR);
+            }
 
         } while (chosenMenuItem == null);
 
         return chosenMenuItem;
     }
 
-    private boolean userWantsToExit(MenuItem chosenMenuItem) {
+    boolean userWantsToExit(MenuItem chosenMenuItem) {
         return EXIT_SYSTEM_NAME.equals(chosenMenuItem.getSystemName());
     }
 
-    private int readUserChoice() {
+    int readUserChoice() {
         return input.readIntValue();
     }
 
-    private void showMenu() {
+    void showMenu() {
         output.printString(viewGenerator.getMainMenuView(mainMenu));
     }
 }
