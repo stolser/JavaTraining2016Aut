@@ -2,10 +2,14 @@
 <Configuration status="WARN">
     <Properties>
         <Property name="PATTERN_DEFAULT">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="PATTERN_EMPTY">%msg%n</Property>
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${PATTERN_DEFAULT}"/>
+        </Console>
+        <Console name="EmptyConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="${PATTERN_EMPTY}"/>
         </Console>
     </Appenders>
     <Loggers>
@@ -13,7 +17,7 @@
             <AppenderRef ref="Console"/>
         </Root>
         <Logger name="com.stolser.javatraining" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
+            <AppenderRef ref="EmptyConsole"/>
         </Logger>
     </Loggers>
 </Configuration>
