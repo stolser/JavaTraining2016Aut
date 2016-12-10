@@ -6,6 +6,7 @@ public interface CharSequenceFactory {
 
     CharSequence getSentence();
 
+    CharSequence getWord();
     CharSequence getWord(String wordStr);
 
     CharSequence getCharacter(char symbol);

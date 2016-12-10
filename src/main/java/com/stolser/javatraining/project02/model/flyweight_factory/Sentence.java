@@ -1,5 +1,6 @@
-package com.stolser.javatraining.project02.model;
+package com.stolser.javatraining.project02.model.flyweight_factory;
 
+import com.stolser.javatraining.project02.model.CharSequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,7 @@ import java.util.Iterator;
 
 class Sentence extends AbstractCharSequence {
     private static final Logger LOGGER = LoggerFactory.getLogger(Sentence.class);
+
     public Sentence() {
         LOGGER.debug("Creating a new Sentence.");
     }
@@ -44,6 +46,7 @@ class Sentence extends AbstractCharSequence {
             iteratorStack.push(iterator);
         }
 
+        @Override
         public boolean hasNext() {
             if (iteratorStack.isEmpty()) {
                 return false;
@@ -58,11 +61,13 @@ class Sentence extends AbstractCharSequence {
             return hasNext();
         }
 
+        @Override
         public CharSequence next() {
             checkForModification();
 
-            if (!hasNext())
+            if (!hasNext()) {
                 return null;
+            }
 
             CharSequence charSequence = iteratorStack.peek().next();
             iteratorStack.push(charSequence.iterator());
@@ -74,14 +79,15 @@ class Sentence extends AbstractCharSequence {
             }
         }
 
+        @Override
         public void remove() {
-            // size--;
             throw new UnsupportedOperationException();
         }
 
         private void checkForModification() {
-            if (modCount != expectedModCount)
+            if (modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
+            }
         }
     }
 

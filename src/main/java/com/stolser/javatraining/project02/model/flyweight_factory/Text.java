@@ -1,5 +1,6 @@
-package com.stolser.javatraining.project02.model;
+package com.stolser.javatraining.project02.model.flyweight_factory;
 
+import com.stolser.javatraining.project02.model.CharSequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

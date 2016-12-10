@@ -1,6 +1,6 @@
-package com.stolser.javatraining.project02.controller;
+package com.stolser.javatraining.project02.controller.parser;
 
-import com.stolser.javatraining.project02.model.CachedCharSequenceFactory;
+import com.stolser.javatraining.project02.model.flyweight_factory.CachedCharSequenceFactory;
 import com.stolser.javatraining.project02.model.CharSequence;
 import com.stolser.javatraining.project02.model.CharSequenceFactory;
 import org.slf4j.Logger;
@@ -13,23 +13,19 @@ import java.util.regex.Pattern;
 
 import static com.stolser.javatraining.project02.model.CharSequence.*;
 
-public class Parser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Parser.class);
+public class SimpleParser implements Parser {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleParser.class);
     private CharSequenceFactory factory = new CachedCharSequenceFactory();
-    private Reader reader;
     private CharSequence text;
     private CharSequence sentence;
     private boolean currentIsSpace;
-    private boolean previousIsSpace;
+    private boolean previousWasSpace;
     private boolean currentIsWordChar;
-    private boolean previousIsWordChar;
+    private boolean previousWasWordChar;
     private StringBuilder wordBuilder;
 
-    public Parser(Reader reader) {
-        this.reader = reader;
-    }
-
-    public CharSequence parse() throws IOException {
+    @Override
+    public CharSequence parse(Reader reader) throws IOException {
         text = factory.getText();
 
         try(BufferedReader in = new BufferedReader(reader)){
@@ -48,6 +44,10 @@ public class Parser {
                 addWordToSentence();
             }
 
+            if (currentIsSpace) {
+                sentence.add(factory.getCharacter(' '));
+            }
+
             if ((sentence.size() != 0)) {
                 text.add(sentence);
             }
@@ -61,7 +61,7 @@ public class Parser {
 
         if (Pattern.matches(SPACE_REGEX, currentSymbol)) {
             currentIsSpace = true;
-        } else if (previousIsSpace) {
+        } else if (previousWasSpace) {
             sentence.add(factory.getCharacter(' '));
             currentIsSpace = false;
         }
@@ -80,7 +80,7 @@ public class Parser {
         } else {
             currentIsWordChar = false;
 
-            if (previousIsWordChar) {
+            if (previousWasWordChar) {
                 // a word's end - create a new Word and add to this sentence;
                 addWordToSentence();
             }
@@ -97,8 +97,8 @@ public class Parser {
             sentence = factory.getSentence();
         }
 
-        previousIsSpace = currentIsSpace;
-        previousIsWordChar = currentIsWordChar;
+        previousWasSpace = currentIsSpace;
+        previousWasWordChar = currentIsWordChar;
     }
 
     private void addWordToSentence() {

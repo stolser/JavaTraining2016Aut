@@ -1,5 +1,7 @@
-package com.stolser.javatraining.project02.model;
+package com.stolser.javatraining.project02.model.flyweight_factory;
 
+import com.stolser.javatraining.project02.model.CharSequence;
+import com.stolser.javatraining.project02.model.CharSequenceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,11 +25,16 @@ public final class CachedCharSequenceFactory implements CharSequenceFactory {
     }
 
     @Override
+    public CharSequence getWord() {
+        return new Word();
+    }
+
+    @Override
     public CharSequence getWord(String wordStr) {
         if (!wordMap.containsKey(wordStr)) {
             wordMap.put(wordStr, new Word(wordStr));
         } else {
-            LOGGER.debug("Getting a Word(\"" + wordStr + "\") from cache.");
+            LOGGER.debug(String.format("Getting a Word(\"%s\") from cache.", wordStr));
         }
 
         return wordMap.get(wordStr);

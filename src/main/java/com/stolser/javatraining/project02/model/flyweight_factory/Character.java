@@ -1,5 +1,6 @@
-package com.stolser.javatraining.project02.model;
+package com.stolser.javatraining.project02.model.flyweight_factory;
 
+import com.stolser.javatraining.project02.model.CharSequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,8 +11,17 @@ public class Character extends AbstractCharSequence {
     private char symbol;
 
     public Character(char symbol) {
-        LOGGER.debug("Creating a new Character for '" + symbol + "'.");
+        LOGGER.debug(String.format("Creating a new Character for '%s'.", symbol));
         this.symbol = symbol;
+    }
+
+    public char getSymbol() {
+        return symbol;
+    }
+
+    @Override
+    public int size() {
+        return 1;
     }
 
     @Override

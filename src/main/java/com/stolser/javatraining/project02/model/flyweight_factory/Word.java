@@ -1,22 +1,27 @@
-package com.stolser.javatraining.project02.model;
+package com.stolser.javatraining.project02.model.flyweight_factory;
 
+import com.stolser.javatraining.project02.model.CharSequence;
+import com.stolser.javatraining.project02.model.CharSequenceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.*;
 import java.util.Iterator;
 
 class Word extends AbstractCharSequence {
     private static final Logger LOGGER = LoggerFactory.getLogger(Word.class);
     private CharSequenceFactory factory = new CachedCharSequenceFactory();
 
-    public Word() {}
+    public Word() {
+        LOGGER.debug("Creating a new empty Word.");
+    }
 
     public Word(String wordStr) {
         for (char symbol: wordStr.toCharArray()) {
             components.add(factory.getCharacter(symbol));
         }
 
-        LOGGER.debug("Creating a new Word for \"" + wordStr + "\".");
+        LOGGER.debug(String.format("Creating a new Word for \"%s\".", wordStr));
     }
 
     @Override
