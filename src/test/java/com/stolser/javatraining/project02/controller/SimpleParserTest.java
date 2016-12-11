@@ -10,25 +10,34 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SimpleParserTest {
     private static final String ORIGINAL_TEXT = " Hello   world!   This  a      \ntext.   Sym$bol\n    ssssss      ";
     private static final String EXPECTED_TEXT = "Hello world! This a \ntext. Sym$bol\n ssssss ";
-    private CharSequence text1;
+    private CharSequence text;
     private CharSequence text2;
+    private Parser parser;
 
     @Before
     public void setUp() throws Exception {
-        Parser parser = new SimpleParser();
+        parser = new SimpleParser();
         String textToParse = "Hello world!!!";
 
-        text1 = parser.parse(new StringReader(textToParse));
+        text = parser.parse(new StringReader(textToParse));
         text2 = parser.parse(new StringReader(textToParse));
     }
 
     @Test
+    public void parse_Should_ReturnEmptyText() throws IOException {
+        String textToParse = "";
+        text = parser.parse(new StringReader(textToParse));
+
+        assertTrue(text.size() == 0);
+    }
+
+    @Test
     public void parse_Should_ParseStringsCorrectly() throws IOException {
-        Parser parser = new SimpleParser();
         String text = ORIGINAL_TEXT;
         String expectedStr = EXPECTED_TEXT;
         CharSequence actual = parser.parse(new StringReader(text));
@@ -39,6 +48,6 @@ public class SimpleParserTest {
 
     @Test
     public void parse_Should_returnEqualCharSequencesForTheSameText() throws Exception {
-        assertEquals(text1, text2);
+        assertEquals(text, text2);
     }
 }

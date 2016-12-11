@@ -5,13 +5,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class Character extends AbstractCharSequence {
     private static final Logger LOGGER = LoggerFactory.getLogger(Character.class);
+    private static final String CREATING_A_NEW_CHARACTER = "Creating a new Character for '%s'.";
     private char symbol;
 
-    public Character(char symbol) {
-        LOGGER.debug(String.format("Creating a new Character for '%s'.", symbol));
+    Character(char symbol) {
+        LOGGER.debug(String.format(CREATING_A_NEW_CHARACTER, symbol));
         this.symbol = symbol;
     }
 
@@ -25,6 +27,11 @@ public class Character extends AbstractCharSequence {
     }
 
     @Override
+    public List<CharSequence> getComponents() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean canAdd(CharSequence component) {
         return false;
     }
@@ -34,6 +41,9 @@ public class Character extends AbstractCharSequence {
         System.out.print(symbol);
     }
 
+    /**
+     * @return a Null-Iterator
+     */
     @Override
     public Iterator<CharSequence> iterator() {
         return new Iterator<CharSequence>() {

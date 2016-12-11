@@ -15,6 +15,8 @@ import static com.stolser.javatraining.project02.model.CharSequence.*;
 
 public class SimpleParser implements Parser {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleParser.class);
+    private static final String SYMBOL_S = "symbol = '%s'";
+    private static final String A_NEW_SENTENCE = "A new sentence: %s";
     private CharSequenceFactory factory = new CachedCharSequenceFactory();
     private CharSequence text;
     private CharSequence sentence;
@@ -35,22 +37,11 @@ public class SimpleParser implements Parser {
             sentence = factory.getSentence();
 
             while ((ch = in.read()) != -1) {
-                LOGGER.debug("symbol = '" + (char) ch + "'");
+                LOGGER.debug(String.format(SYMBOL_S, ch));
                 processSymbol((char) ch);
-
             }
 
-            if (wordBuilder != null) {
-                addWordToSentence();
-            }
-
-            if (currentIsSpace) {
-                sentence.add(factory.getCharacter(' '));
-            }
-
-            if ((sentence.size() != 0)) {
-                text.add(sentence);
-            }
+            completeLasWordSpaceSentence();
         }
 
         return text;
@@ -62,36 +53,26 @@ public class SimpleParser implements Parser {
         if (Pattern.matches(SPACE_REGEX, currentSymbol)) {
             currentIsSpace = true;
         } else if (previousWasSpace) {
-            sentence.add(factory.getCharacter(' '));
-            currentIsSpace = false;
+            addOneSpace();
         }
 
         if (Pattern.matches(WORD_CHARACTER_REGEX, currentSymbol)) {
-            currentIsWordChar = true;
-
-            if (wordBuilder == null) {
-                LOGGER.debug("word's beginning...");
-                // a word's beginning;
-                wordBuilder = new StringBuilder();
-            }
-
-            wordBuilder.append(currentSymbol);
+            appendSymbolToWord(currentSymbol);
 
         } else {
             currentIsWordChar = false;
 
             if (previousWasWordChar) {
-                // a word's end - create a new Word and add to this sentence;
                 addWordToSentence();
             }
         }
 
         if (!currentIsSpace && !currentIsWordChar) {
-            sentence.add(factory.getCharacter(ch));
+            addSymbolToSentence(ch);
         }
 
         if (Pattern.matches(SENTENCE_END_REGEX, currentSymbol)) {
-            LOGGER.debug("A new sentence: " + sentence.toString());
+            LOGGER.debug(String.format(A_NEW_SENTENCE, sentence.toString()));
 
             text.add(sentence);
             sentence = factory.getSentence();
@@ -101,10 +82,43 @@ public class SimpleParser implements Parser {
         previousWasWordChar = currentIsWordChar;
     }
 
+    private void appendSymbolToWord(String currentSymbol) {
+        currentIsWordChar = true;
+
+        if (wordBuilder == null) {
+            wordBuilder = new StringBuilder();
+        }
+
+        wordBuilder.append(currentSymbol);
+    }
+
+    private void addOneSpace() {
+        addSymbolToSentence(' ');
+        currentIsSpace = false;
+    }
+
     private void addWordToSentence() {
         CharSequence word = factory.getWord(wordBuilder.toString());
         LOGGER.debug("a new Word: \"" + word.toString() + "\"");
         sentence.add(word);
         wordBuilder = null;
+    }
+
+    private void completeLasWordSpaceSentence() {
+        if (wordBuilder != null) {
+            addWordToSentence();
+        }
+
+        if (currentIsSpace) {
+            addSymbolToSentence(' ');
+        }
+
+        if ((sentence.size() != 0)) {
+            text.add(sentence);
+        }
+    }
+
+    private void addSymbolToSentence(char ch) {
+        sentence.add(factory.getCharacter(ch));
     }
 }

@@ -16,7 +16,6 @@ public class Client {
 //        String textToParse = "Hello   world";
         CharSequence parsed = new SimpleParser().parse(new StringReader(textToParse));
 
-        System.out.println("text's size = " + parsed.size());
         System.out.println(parsed.toString());
         System.out.println("Printing the text using the print() method:");
         parsed.print();

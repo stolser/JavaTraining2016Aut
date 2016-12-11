@@ -33,6 +33,10 @@ class Sentence extends AbstractCharSequence {
         return builder.toString();
     }
 
+    /**
+     * @return an iterator over the symbols in this sentence. Automatically iterates over word
+     * characters if the current element is a Word.
+     */
     @Override
     public Iterator<CharSequence> iterator() {
         return new IteratorOnCharacters(components.iterator());

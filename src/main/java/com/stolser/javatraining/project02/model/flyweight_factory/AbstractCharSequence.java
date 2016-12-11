@@ -4,8 +4,12 @@ import com.stolser.javatraining.project02.model.CharSequence;
 
 import java.util.*;
 
+/**
+ * Implements some common functionality for all subtypes. Some subclasses can override this
+ * behavior implementing more appropriate one.
+ */
 abstract class AbstractCharSequence implements CharSequence, Iterable<CharSequence> {
-    public List<CharSequence> components = new ArrayList<>();
+    protected List<CharSequence> components = new ArrayList<>();
     protected int modCount;
 
     @Override
