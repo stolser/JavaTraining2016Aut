@@ -3,7 +3,6 @@ package com.stolser.javatraining.project02.controller.parser;
 import com.stolser.javatraining.project02.model.CharSequence;
 
 import java.io.IOException;
-import java.io.Reader;
 
 /**
  * A functional interface containing a method for parsing character stream into a
@@ -12,9 +11,8 @@ import java.io.Reader;
  */
 public interface Parser {
     /**
-     * @param reader a character stream to be used as a source for characters
      * @return a Text root element
      * @throws IOException
      */
-    CharSequence parse(Reader reader) throws IOException;
+    CharSequence parse() throws IOException;
 }

@@ -15,8 +15,9 @@ import static com.stolser.javatraining.project02.model.CharSequence.*;
 
 public class SimpleParser implements Parser {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleParser.class);
-    private static final String SYMBOL_S = "symbol = '%s'";
+    private static final String SYMBOL_S = "symbol = '%c'";
     private static final String A_NEW_SENTENCE = "A new sentence: %s";
+    private static final String A_NEW_WORD_S = "a new Word: \"%s\"";
     private CharSequenceFactory factory = new CachedCharSequenceFactory();
     private CharSequence text;
     private CharSequence sentence;
@@ -25,10 +26,19 @@ public class SimpleParser implements Parser {
     private boolean currentIsWordChar;
     private boolean previousWasWordChar;
     private StringBuilder wordBuilder;
+    private Reader reader;
+
+    /**
+     * @param reader a character stream to be used as a source for characters
+     */
+    public SimpleParser(Reader reader) {
+        this.reader = reader;
+    }
 
     @Override
-    public CharSequence parse(Reader reader) throws IOException {
+    public CharSequence parse() throws IOException {
         text = factory.getText();
+        wordBuilder = null;
 
         try(BufferedReader in = new BufferedReader(reader)){
             int ch;
@@ -52,8 +62,12 @@ public class SimpleParser implements Parser {
 
         if (Pattern.matches(SPACE_REGEX, currentSymbol)) {
             currentIsSpace = true;
-        } else if (previousWasSpace) {
-            addOneSpace();
+        } else {
+            currentIsSpace = false;
+
+            if (previousWasSpace) {
+                addSymbolToSentence(' ');
+            }
         }
 
         if (Pattern.matches(WORD_CHARACTER_REGEX, currentSymbol)) {
@@ -92,14 +106,9 @@ public class SimpleParser implements Parser {
         wordBuilder.append(currentSymbol);
     }
 
-    private void addOneSpace() {
-        addSymbolToSentence(' ');
-        currentIsSpace = false;
-    }
-
     private void addWordToSentence() {
         CharSequence word = factory.getWord(wordBuilder.toString());
-        LOGGER.debug("a new Word: \"" + word.toString() + "\"");
+        LOGGER.debug(String.format(A_NEW_WORD_S, word.toString()));
         sentence.add(word);
         wordBuilder = null;
     }

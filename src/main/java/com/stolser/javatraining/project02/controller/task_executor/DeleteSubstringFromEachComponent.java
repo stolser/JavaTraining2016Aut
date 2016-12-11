@@ -41,19 +41,26 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
 
                 if (!firstFound && thisSymbol.equals(first)) {
                     firstFound = true;
-                    charLists.add(currentCharList);
 
-                    LOGGER.debug("Adding currentCharList = " + currentCharList);
+                    if (currentCharList != null) {
+                        LOGGER.debug("Adding currentCharList = " + currentCharList);
+                        charLists.add(currentCharList);
+                    } else if (charLists.size() == 0) {
+                        charLists.add(new ArrayList<>());
+                        LOGGER.debug("Adding currentCharList = []");
+
+                    }
+
                     currentCharList = null;
 
                     continue;
                 } else {
                     if (firstFound && thisSymbol.equals(last)) {
                         if (currentCharList != null) {
+                            LOGGER.debug("Adding currentCharList = " + currentCharList);
                             charLists.add(currentCharList);
 
-                            LOGGER.debug("Adding currentCharList = " + currentCharList);
-                            currentCharList = null;
+                            currentCharList = new ArrayList<>();
                         }
 
                         continue;
@@ -114,8 +121,11 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
             if (CharSequence.isWordCharacter((Character) currentSymbol)) {
                 if (currentWord == null) {
                     currentWord = factory.getWord();
+                    System.out.println("factory: " + factory.getClass());
                 }
 
+                System.out.println("..........currentWord: " + currentWord);
+                System.out.println("factory.getWord(): " + factory.getWord("sisssssskiiiiii"));
                 currentIsWordChar = true;
                 currentWord.add(currentSymbol);
             } else {    // currentSymbol is not word character;

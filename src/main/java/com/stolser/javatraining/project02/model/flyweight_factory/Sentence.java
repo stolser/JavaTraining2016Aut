@@ -35,7 +35,7 @@ class Sentence extends AbstractCharSequence {
 
     /**
      * @return an iterator over the symbols in this sentence. Automatically iterates over word
-     * characters if the current element is a Word.
+     * characters if the current element is a Word
      */
     @Override
     public Iterator<CharSequence> iterator() {

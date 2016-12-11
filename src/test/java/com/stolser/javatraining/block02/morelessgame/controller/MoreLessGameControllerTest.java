@@ -56,9 +56,6 @@ public class MoreLessGameControllerTest {
 
 
         currentAttempt = mock(UserAttempt.class);
-
-
-
     }
 
     @Test
