@@ -11,18 +11,12 @@ import java.io.StringReader;
 public class Client {
     public static void main(String[] args) throws IOException {
 
-//        String textToParse = "Hello   world!   This  a      \ntext.   Sym$bol\n    ssssss      ";
-        String textToParse = "Hello World!H abcdef^  #aaaa";
-//        String textToParse = "Hello   world";
-        Reader stringReader = new StringReader(textToParse);
+        Reader stringReader = new StringReader("Hello World!H abcdef^  #aaaa");
         Reader fileReader = new FileReader("original.txt");
         CharSequence parsed = new SimpleParser(fileReader).parse();
 
         System.out.println(parsed.toString());
         System.out.println("Printing the text using the print() method:");
         parsed.print();
-        System.out.println("");
-
-//        System.out.println(new DeleteSubstringFromEachComponent(parsed, 'H', 'a').execute().toString());
     }
 }

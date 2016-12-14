@@ -13,6 +13,11 @@ import java.util.List;
 
 public class DeleteSubstringFromEachComponent implements TaskExecutor {
     private static final Logger LOGGER = LoggerFactory.getLogger(DeleteSubstringFromEachComponent.class);
+    private static final String ADDING_CURRENT_CHAR_LIST_S = "Adding currentCharList = %s";
+    private static final String ADDING_CURRENT_CHAR_LIST = "Adding currentCharList = []";
+    private static final String ADDING_CURRENT_CHAR_LIST_S1 = "Adding currentCharList = %s";
+    private static final String ADDING_CURRENT_CHAR_LIST_S2 = "Adding currentCharList = %s";
+    private static final String NOT_DELETED_SYMBOLS_S = "notDeletedSymbols = %s";
     private CharSequenceFactory factory = new CachedCharSequenceFactory();
     private CharSequence first;
     private CharSequence last;
@@ -22,6 +27,10 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
         this.text = text;
         this.first = factory.getCharacter(first);
         this.last = factory.getCharacter(last);
+    }
+
+    public void setFactory(CharSequenceFactory factory) {
+        this.factory = factory;
     }
 
     @Override
@@ -43,11 +52,11 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
                     firstFound = true;
 
                     if (currentCharList != null) {
-                        LOGGER.debug("Adding currentCharList = " + currentCharList);
+                        LOGGER.debug(String.format(ADDING_CURRENT_CHAR_LIST_S, currentCharList));
                         charLists.add(currentCharList);
                     } else if (charLists.size() == 0) {
                         charLists.add(new ArrayList<>());
-                        LOGGER.debug("Adding currentCharList = []");
+                        LOGGER.debug(ADDING_CURRENT_CHAR_LIST);
 
                     }
 
@@ -57,7 +66,7 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
                 } else {
                     if (firstFound && thisSymbol.equals(last)) {
                         if (currentCharList != null) {
-                            LOGGER.debug("Adding currentCharList = " + currentCharList);
+                            LOGGER.debug(String.format(ADDING_CURRENT_CHAR_LIST_S1, currentCharList));
                             charLists.add(currentCharList);
 
                             currentCharList = new ArrayList<>();
@@ -75,13 +84,13 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
             }
 
             if (currentCharList != null) {
-                LOGGER.debug("Adding currentCharList = " + currentCharList);
+                LOGGER.debug(String.format(ADDING_CURRENT_CHAR_LIST_S2, currentCharList));
 
                 charLists.add(currentCharList);
             }
 
             List<CharSequence> notDeletedSymbols = getNotDeletedSymbols(charLists);
-            LOGGER.debug("notDeletedSymbols = " + notDeletedSymbols);
+            LOGGER.debug(String.format(NOT_DELETED_SYMBOLS_S, notDeletedSymbols));
 
             if (notDeletedSymbols.size() > 0) {
                 newText.add(getSentenceFromSymbols(notDeletedSymbols));
@@ -121,11 +130,8 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
             if (CharSequence.isWordCharacter((Character) currentSymbol)) {
                 if (currentWord == null) {
                     currentWord = factory.getWord();
-                    System.out.println("factory: " + factory.getClass());
                 }
 
-                System.out.println("..........currentWord: " + currentWord);
-                System.out.println("factory.getWord(): " + factory.getWord("sisssssskiiiiii"));
                 currentIsWordChar = true;
                 currentWord.add(currentSymbol);
             } else {    // currentSymbol is not word character;
