@@ -1,17 +1,16 @@
-package com.stolser.javatraining.project02.controller;
+package com.stolser.javatraining.project02.controller.parser;
 
-import com.stolser.javatraining.project02.controller.parser.Parser;
-import com.stolser.javatraining.project02.controller.parser.SimpleParser;
 import com.stolser.javatraining.project02.model.CharSequence;
+import com.stolser.javatraining.project02.model.CharSequenceFactory;
+import com.stolser.javatraining.project02.model.flyweight_factory.CachedCharSequenceFactory;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.StringReader;
 
 import static org.junit.Assert.assertEquals;
@@ -23,22 +22,22 @@ public class SimpleParserTest {
     private static final String EXPECTED_TEXT = " Hello world! This a \ntext. Sym$bol\n ssssss ";
     private CharSequence parsedText;
     private CharSequence parsedText2;
-    @Mock(name = "reader")
-    private Reader mockReader = mock(Reader.class);
+    @Mock
+    private CharSequenceFactory mockFactory;
+    private CharSequenceFactory realFactory  = new CachedCharSequenceFactory();
+    private BufferedReader mockReader = mock(BufferedReader.class);
     @InjectMocks
-    private Parser parserWithMockReader = new SimpleParser(null);
+    private SimpleParser parserWithMockReader = new SimpleParser(null);
 
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+
         String textToParse = "Hello world! Abcd.holeee xworld$ last";
 
         parsedText = new SimpleParser(new StringReader(textToParse)).parse();
         parsedText2 = new SimpleParser(new StringReader(textToParse)).parse();
 
-        when(mockReader.read()).thenReturn((int)'A').thenReturn((int)'b')
-                .thenReturn((int)'c').thenReturn(-1);
-
-        MockitoAnnotations.initMocks(this);
     }
 
     @Test
@@ -64,12 +63,27 @@ public class SimpleParserTest {
         assertEquals(parsedText, parsedText2);
     }
 
-    @Ignore
     @Test
     public void parse_Should_CallReaderFourTimes() throws IOException {
-        parserWithMockReader.parse();
+        when(mockReader.read()).thenReturn((int)'H', (int)'e', (int)'l', (int)'l', (int)'o',
+                (int)' ', (int)'W', (int)'o', (int)'r', (int)'l', (int)'d', (int)'!', -1);
 
-        verify(mockReader, times(4));
+        when(mockFactory.getText()).thenReturn(realFactory.getText());
+        when(mockFactory.getSentence()).thenReturn(realFactory.getSentence());
+        when(mockFactory.getWord("Hello")).thenReturn(realFactory.getWord("Hello"));
+        when(mockFactory.getWord("World")).thenReturn(realFactory.getWord("World"));
+        when(mockFactory.getCharacter(' ')).thenReturn(realFactory.getCharacter(' '));
+        when(mockFactory.getCharacter('!')).thenReturn(realFactory.getCharacter('!'));
+
+        parserWithMockReader.readSymbolsUntilEnd(mockReader);
+
+        verify(mockReader, times(13)).read();
+        verify(mockFactory).getText();
+        verify(mockFactory, times(2)).getSentence();
+        verify(mockFactory, times(2)).getCharacter(anyChar());
+        verify(mockFactory).getWord("Hello");
+        verify(mockFactory).getWord("World");
+
     }
 
 }

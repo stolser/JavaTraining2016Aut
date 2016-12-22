@@ -1,10 +1,8 @@
 package com.stolser.javatraining.project02.controller.parser;
 
-import com.stolser.javatraining.project02.model.flyweight_factory.CachedCharSequenceFactory;
 import com.stolser.javatraining.project02.model.CharSequence;
 import com.stolser.javatraining.project02.model.CharSequenceFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.stolser.javatraining.project02.model.flyweight_factory.CachedCharSequenceFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,10 +12,6 @@ import java.util.regex.Pattern;
 import static com.stolser.javatraining.project02.model.CharSequence.*;
 
 public class SimpleParser implements Parser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleParser.class);
-    private static final String SYMBOL_S = "symbol = '%c'";
-    private static final String A_NEW_SENTENCE = "A new sentence: %s";
-    private static final String A_NEW_WORD_S = "a new Word: \"%s\"";
     private CharSequenceFactory factory = new CachedCharSequenceFactory();
     private CharSequence text;
     private CharSequence sentence;
@@ -37,24 +31,25 @@ public class SimpleParser implements Parser {
 
     @Override
     public CharSequence parse() throws IOException {
-        text = factory.getText();
-        wordBuilder = null;
-
         try(BufferedReader in = new BufferedReader(reader)){
-            int ch;
-            currentIsSpace = false;
-            currentIsWordChar = false;
-            sentence = factory.getSentence();
-
-            while ((ch = in.read()) != -1) {
-                LOGGER.debug(String.format(SYMBOL_S, ch));
-                processSymbol((char) ch);
-            }
-
-            completeLasWordSpaceSentence();
+            readSymbolsUntilEnd(in);
+            completeLastWordSpaceSentence();
         }
 
         return text;
+    }
+
+    void readSymbolsUntilEnd(BufferedReader in) throws IOException {
+        text = factory.getText();
+        sentence = factory.getSentence();
+        wordBuilder = null;
+        currentIsSpace = false;
+        currentIsWordChar = false;
+        int ch;
+        while ((ch = in.read()) != -1) {
+//            System.out.println(String.format(SYMBOL_S, ch));
+            processSymbol((char) ch);
+        }
     }
 
     private void processSymbol(char ch) {
@@ -86,8 +81,6 @@ public class SimpleParser implements Parser {
         }
 
         if (Pattern.matches(SENTENCE_END_REGEX, currentSymbol)) {
-            LOGGER.debug(String.format(A_NEW_SENTENCE, sentence.toString()));
-
             text.add(sentence);
             sentence = factory.getSentence();
         }
@@ -108,12 +101,11 @@ public class SimpleParser implements Parser {
 
     private void addWordToSentence() {
         CharSequence word = factory.getWord(wordBuilder.toString());
-        LOGGER.debug(String.format(A_NEW_WORD_S, word.toString()));
         sentence.add(word);
         wordBuilder = null;
     }
 
-    private void completeLasWordSpaceSentence() {
+    private void completeLastWordSpaceSentence() {
         if (wordBuilder != null) {
             addWordToSentence();
         }
