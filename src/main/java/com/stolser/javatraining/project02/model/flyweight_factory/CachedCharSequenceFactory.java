@@ -13,8 +13,8 @@ public final class CachedCharSequenceFactory implements CharSequenceFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(CachedCharSequenceFactory.class);
     private static final String GETTING_A_WORD_S_FROM_CACHE = "Getting a Word(\"%s\") from cache.";
     private static final String GETTING_A_CHARACTER_S_FROM_CACHE = "Getting a Character('%s') from cache.";
-    private static Map<java.lang.Character, Character> characterMap = new HashMap<>();
-    private static Map<String, Word> wordMap = new WeakHashMap<>();
+    private static Map<java.lang.Character, Character> characterCache = new HashMap<>();
+    private static Map<String, Word> wordCache = new WeakHashMap<>();
 
     @Override
     public CharSequence getText() {
@@ -33,23 +33,23 @@ public final class CachedCharSequenceFactory implements CharSequenceFactory {
 
     @Override
     public CharSequence getWord(String wordStr) {
-        if (!wordMap.containsKey(wordStr)) {
-            wordMap.put(wordStr, new Word(wordStr));
+        if (!wordCache.containsKey(wordStr)) {
+            wordCache.put(wordStr, new Word(wordStr));
         } else {
             LOGGER.debug(String.format(GETTING_A_WORD_S_FROM_CACHE, wordStr));
         }
 
-        return wordMap.get(wordStr);
+        return wordCache.get(wordStr);
     }
 
     @Override
     public CharSequence getCharacter(char symbol) {
-        if (!characterMap.containsKey(symbol)) {
-            characterMap.put(symbol, new Character(symbol));
+        if (!characterCache.containsKey(symbol)) {
+            characterCache.put(symbol, new Character(symbol));
         } else {
             LOGGER.debug(String.format(GETTING_A_CHARACTER_S_FROM_CACHE, symbol));
         }
 
-        return characterMap.get(symbol);
+        return characterCache.get(symbol);
     }
 }

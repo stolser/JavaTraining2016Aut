@@ -22,6 +22,12 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
     private CharSequence first;
     private CharSequence last;
     private CharSequence text;
+    private boolean firstFound;
+    private List<List<CharSequence>> charLists;
+    private Iterator<CharSequence> symbolIt;
+    private List<CharSequence> currentCharList;
+    private CharSequence newText;
+    private Iterator<CharSequence> sentenceIt;
 
     public DeleteSubstringFromEachComponent(CharSequence text, char first, char last) {
         this.text = text;
@@ -35,70 +41,98 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
 
     @Override
     public CharSequence execute() {
-        CharSequence newText = factory.getText();
-        Iterator<CharSequence> sentenceIt = text.iterator();
+        newText = factory.getText();
+        sentenceIt = text.iterator();
 
         while (sentenceIt.hasNext()) {
-            List<List<CharSequence>> charLists = new ArrayList<>();
-
-            Iterator<CharSequence> symbolIt = sentenceIt.next().iterator();
-            boolean firstFound = false;
-
-            List<CharSequence> currentCharList = null;
-            while (symbolIt.hasNext()) {
-                CharSequence thisSymbol = symbolIt.next();
-
-                if (!firstFound && thisSymbol.equals(first)) {
-                    firstFound = true;
-
-                    if (currentCharList != null) {
-                        LOGGER.debug(String.format(ADDING_CURRENT_CHAR_LIST_S, currentCharList));
-                        charLists.add(currentCharList);
-                    } else if (charLists.size() == 0) {
-                        charLists.add(new ArrayList<>());
-                        LOGGER.debug(ADDING_CURRENT_CHAR_LIST);
-
-                    }
-
-                    currentCharList = null;
-
-                    continue;
-                } else {
-                    if (firstFound && thisSymbol.equals(last)) {
-                        if (currentCharList != null) {
-                            LOGGER.debug(String.format(ADDING_CURRENT_CHAR_LIST_S1, currentCharList));
-                            charLists.add(currentCharList);
-
-                            currentCharList = new ArrayList<>();
-                        }
-
-                        continue;
-                    }
-                }
-
-                if (currentCharList == null) {
-                    currentCharList = new ArrayList<>();
-                }
-
-                currentCharList.add(thisSymbol);
-            }
-
-            if (currentCharList != null) {
-                LOGGER.debug(String.format(ADDING_CURRENT_CHAR_LIST_S2, currentCharList));
-
-                charLists.add(currentCharList);
-            }
-
-            List<CharSequence> notDeletedSymbols = getNotDeletedSymbols(charLists);
-            LOGGER.debug(String.format(NOT_DELETED_SYMBOLS_S, notDeletedSymbols));
-
-            if (notDeletedSymbols.size() > 0) {
-                newText.add(getSentenceFromSymbols(notDeletedSymbols));
-            }
-
+            resetValuesForCurrentSentence();
+            processCurrentSentence();
+            addCurrentCharListToLists();
+            makeSentenceAndAddToText();
         }
 
         return newText;
+    }
+
+    private void resetValuesForCurrentSentence() {
+        charLists = new ArrayList<>();
+        symbolIt = sentenceIt.next().iterator();
+        firstFound = false;
+        currentCharList = null;
+    }
+
+    private void processCurrentSentence() {
+        while (symbolIt.hasNext()) {
+            CharSequence currentSymbol = symbolIt.next();
+            boolean addSymbol = true;
+
+            if (firstSymbolOccurredFirstTime(currentSymbol)) {
+                processFirstSymbolOccurrence();
+                addSymbol = false;
+            } else if (lastSymbolOccurredAfterFirst(currentSymbol)) {
+                processLastSymbolOccurrence();
+                addSymbol = false;
+            }
+
+            if (addSymbol) {
+                addSymbolToCurrentCharList(currentSymbol);
+            }
+        }
+    }
+
+    private void processLastSymbolOccurrence() {
+        if (currentCharList != null) {
+            LOGGER.debug(String.format(ADDING_CURRENT_CHAR_LIST_S1, currentCharList));
+            charLists.add(currentCharList);
+
+            currentCharList = new ArrayList<>();
+        }
+    }
+
+    private void processFirstSymbolOccurrence() {
+        firstFound = true;
+
+        if (currentCharList != null) {
+            LOGGER.debug(String.format(ADDING_CURRENT_CHAR_LIST_S, currentCharList));
+            charLists.add(currentCharList);
+        } else if (charLists.isEmpty()) {
+            charLists.add(new ArrayList<>());
+            LOGGER.debug(ADDING_CURRENT_CHAR_LIST);
+        }
+
+        currentCharList = null;
+    }
+
+    private boolean lastSymbolOccurredAfterFirst(CharSequence currentSymbol) {
+        return firstFound && currentSymbol.equals(last);
+    }
+
+    private boolean firstSymbolOccurredFirstTime(CharSequence currentSymbol) {
+        return !firstFound && currentSymbol.equals(first);
+    }
+
+    private void addCurrentCharListToLists() {
+        if (currentCharList != null) {
+            LOGGER.debug(String.format(ADDING_CURRENT_CHAR_LIST_S2, currentCharList));
+            charLists.add(currentCharList);
+        }
+    }
+
+    private void makeSentenceAndAddToText() {
+        List<CharSequence> notDeletedSymbols = getNotDeletedSymbols(charLists);
+        LOGGER.debug(String.format(NOT_DELETED_SYMBOLS_S, notDeletedSymbols));
+
+        if (!notDeletedSymbols.isEmpty()) {
+            newText.add(getSentenceFromSymbols(notDeletedSymbols));
+        }
+    }
+
+    private void addSymbolToCurrentCharList(CharSequence currentSymbol) {
+        if (currentCharList == null) {
+            currentCharList = new ArrayList<>();
+        }
+
+        currentCharList.add(currentSymbol);
     }
 
     private List<CharSequence> getNotDeletedSymbols(List<List<CharSequence>> charLists) {

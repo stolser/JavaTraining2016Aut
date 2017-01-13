@@ -55,6 +55,20 @@ public class SimpleParser implements Parser {
     private void processSymbol(char ch) {
         String currentSymbol = String.valueOf(ch);
 
+        checkIfSymbolIsSpace(currentSymbol);
+        checkIfSymbolIsWordCharacter(currentSymbol);
+
+        if (isSymbolNotSpaceAndNotWordChar()) {
+            addSymbolToSentence(ch);
+        }
+
+        checkForSentenceEndSymbol(currentSymbol);
+
+        previousWasSpace = currentIsSpace;
+        previousWasWordChar = currentIsWordChar;
+    }
+
+    private void checkIfSymbolIsSpace(String currentSymbol) {
         if (Pattern.matches(SPACE_REGEX, currentSymbol)) {
             currentIsSpace = true;
         } else {
@@ -64,7 +78,9 @@ public class SimpleParser implements Parser {
                 addSymbolToSentence(' ');
             }
         }
+    }
 
+    private void checkIfSymbolIsWordCharacter(String currentSymbol) {
         if (Pattern.matches(WORD_CHARACTER_REGEX, currentSymbol)) {
             appendSymbolToWord(currentSymbol);
 
@@ -75,18 +91,17 @@ public class SimpleParser implements Parser {
                 addWordToSentence();
             }
         }
+    }
 
-        if (!currentIsSpace && !currentIsWordChar) {
-            addSymbolToSentence(ch);
-        }
+    private boolean isSymbolNotSpaceAndNotWordChar() {
+        return !currentIsSpace && !currentIsWordChar;
+    }
 
+    private void checkForSentenceEndSymbol(String currentSymbol) {
         if (Pattern.matches(SENTENCE_END_REGEX, currentSymbol)) {
             text.add(sentence);
             sentence = factory.getSentence();
         }
-
-        previousWasSpace = currentIsSpace;
-        previousWasWordChar = currentIsWordChar;
     }
 
     private void appendSymbolToWord(String currentSymbol) {
