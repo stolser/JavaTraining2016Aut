@@ -3,7 +3,6 @@ package com.stolser.javatraining.project02.controller.task_executor;
 import com.stolser.javatraining.project02.model.CharSequence;
 import com.stolser.javatraining.project02.model.CharSequenceFactory;
 import com.stolser.javatraining.project02.model.flyweight_factory.CachedCharSequenceFactory;
-import com.stolser.javatraining.project02.model.flyweight_factory.Character;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class DeleteSubstringFromEachComponent implements TaskExecutor {
+class DeleteSubstringFromEachComponent implements TaskExecutor {
     private static final Logger LOGGER = LoggerFactory.getLogger(DeleteSubstringFromEachComponent.class);
     private static final String ADDING_CURRENT_CHAR_LIST_S = "Adding currentCharList = %s";
     private static final String ADDING_CURRENT_CHAR_LIST = "Adding currentCharList = []";
@@ -29,7 +28,7 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
     private CharSequence newText;
     private Iterator<CharSequence> sentenceIt;
 
-    public DeleteSubstringFromEachComponent(CharSequence text, char first, char last) {
+    DeleteSubstringFromEachComponent(CharSequence text, char first, char last) {
         this.text = text;
         this.first = factory.getCharacter(first);
         this.last = factory.getCharacter(last);
@@ -64,14 +63,14 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
     private void processCurrentSentence() {
         while (symbolIt.hasNext()) {
             CharSequence currentSymbol = symbolIt.next();
-            boolean addSymbol = true;
+            boolean addSymbol = false;
 
             if (firstSymbolOccurredFirstTime(currentSymbol)) {
                 processFirstSymbolOccurrence();
-                addSymbol = false;
             } else if (lastSymbolOccurredAfterFirst(currentSymbol)) {
                 processLastSymbolOccurrence();
-                addSymbol = false;
+            } else {
+                addSymbol = true;
             }
 
             if (addSymbol) {
@@ -123,7 +122,7 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
         LOGGER.debug(String.format(NOT_DELETED_SYMBOLS_S, notDeletedSymbols));
 
         if (!notDeletedSymbols.isEmpty()) {
-            newText.add(getSentenceFromSymbols(notDeletedSymbols));
+            newText.add(new SentenceGenerator(notDeletedSymbols).generate());
         }
     }
 
@@ -149,43 +148,5 @@ public class DeleteSubstringFromEachComponent implements TaskExecutor {
         }
 
         return notDeletedSymbols;
-    }
-
-    private CharSequence getSentenceFromSymbols(List<CharSequence> symbols) {
-        CharSequence sentence = factory.getSentence();
-        CharSequence currentWord = null;
-        Iterator<CharSequence> it = symbols.iterator();
-        boolean previousWasWordChar = false;
-        boolean currentIsWordChar;
-
-        while (it.hasNext()) {
-            CharSequence currentSymbol = it.next();
-
-            if (CharSequence.isWordCharacter((Character) currentSymbol)) {
-                if (currentWord == null) {
-                    currentWord = factory.getWord();
-                }
-
-                currentIsWordChar = true;
-                currentWord.add(currentSymbol);
-            } else {    // currentSymbol is not word character;
-                currentIsWordChar = false;
-
-                if (previousWasWordChar) {
-                    sentence.add(currentWord);
-                    currentWord = null;
-                }
-
-                sentence.add(currentSymbol);
-            }
-
-            previousWasWordChar = currentIsWordChar;
-        }
-
-        if (currentWord != null) {
-            sentence.add(currentWord);
-        }
-
-        return sentence;
     }
 }

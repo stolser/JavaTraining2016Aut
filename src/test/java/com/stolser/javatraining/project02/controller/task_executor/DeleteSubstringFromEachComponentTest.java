@@ -89,17 +89,5 @@ public class DeleteSubstringFromEachComponentTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    public void parse_Should_callFactoryMethodsCorrectNumberOfTimes() {
-        DeleteSubstringFromEachComponent executor = new DeleteSubstringFromEachComponent(parsedText, 'e', 'x');
-        executor.setFactory(mockFactory);
-
-        executor.execute();
-
-        verify(mockFactory, times(1)).getText();
-        verify(mockFactory, times(3)).getSentence();
-        verify(mockFactory, times(4)).getWord();
-    }
-
 
 }

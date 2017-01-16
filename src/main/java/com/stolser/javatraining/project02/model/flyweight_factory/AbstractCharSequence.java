@@ -34,4 +34,6 @@ abstract class AbstractCharSequence implements CharSequence, Iterable<CharSequen
 
         throw new UnsupportedOperationException();
     }
+
+
 }

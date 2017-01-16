@@ -12,7 +12,7 @@ import java.util.Iterator;
 class Sentence extends AbstractCharSequence {
     private static final Logger LOGGER = LoggerFactory.getLogger(Sentence.class);
 
-    public Sentence() {
+    Sentence() {
         LOGGER.debug("Creating a new Sentence.");
     }
 
